@@ -31,3 +31,7 @@ keymap.set('', 'sk', '<C-w>k')
 keymap.set('', 'sj', '<C-w>j')
 keymap.set('', 'sl', '<C-w>l')
 keymap.set('t', '<Esc>', '<C-\\><c-n>')
+
+-- moving a line
+keymap.set('v', "J", ":m '>+1<CR>gv=gv")
+keymap.set('v', "K", ":m '<-2<CR>gv=gv")
