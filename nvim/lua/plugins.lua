@@ -8,16 +8,12 @@ vim.cmd [[packadd packer.nvim]]
 
 packer.startup(function(use)
   use 'wbthomason/packer.nvim'
-  -- use {
+  --  use {
   -- 'svrana/neosolarized.nvim',
-  -- requires = { 'tjdevries/colorbuddy.nvim' }
-  -- }
-  use {
-    'folke/tokyonight.nvim',
-    requires = {
-      'kyazdani42/nvim-web-devicons', -- optional, for file icons
-    },
-  }
+  --  requires = { 'tjdevries/colorbuddy.nvim' }
+  --  }
+  -- use 'folke/tokyonight.nvim'
+  use("bluz71/vim-nightfly-guicolors")
   use {
     'nvim-lualine/lualine.nvim',
     requires = { 'kyazdani42/nvim-web-devicons', opt = true }
