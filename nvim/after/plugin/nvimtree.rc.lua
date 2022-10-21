@@ -6,6 +6,7 @@ require("nvim-tree").setup({
   update_focused_file = {
     enable = true,
     update_cwd = false,
+    ignore_list = { ".git", "node_modules", ".cache", 'dist' },
   },
   actions = { open_file = {
     resize_window = true,
@@ -13,7 +14,7 @@ require("nvim-tree").setup({
   },
   git = {
     enable = true,
-    ignore = false,
+    ignore = true,
   },
   view = {
     adaptive_size = true,
@@ -28,5 +29,10 @@ require("nvim-tree").setup({
   },
   filters = {
     dotfiles = true,
+    custom = { ".git", "node_modules", "dist" },
+    exclude = {
+      'node_modules',
+      'dist'
+    }
   },
 })
