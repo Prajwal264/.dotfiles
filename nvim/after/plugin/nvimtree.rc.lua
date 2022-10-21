@@ -30,3 +30,9 @@ require("nvim-tree").setup({
     dotfiles = true,
   },
 })
+
+
+local opts = { noremap = true, silent = true };
+
+
+vim.keymap.set('n', '<leader>n', '<cmd>:NvimTreeToggle<CR>', opts);
