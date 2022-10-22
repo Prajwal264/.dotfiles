@@ -74,6 +74,11 @@ end
 time([[try_loadstring definition]], false)
 time([[Defining packer_plugins]], true)
 _G.packer_plugins = {
+  ["Comment.nvim"] = {
+    loaded = true,
+    path = "/Users/prajwalp/.local/share/nvim/site/pack/packer/start/Comment.nvim",
+    url = "https://github.com/numToStr/Comment.nvim"
+  },
   LuaSnip = {
     loaded = true,
     path = "/Users/prajwalp/.local/share/nvim/site/pack/packer/start/LuaSnip",
@@ -88,6 +93,11 @@ _G.packer_plugins = {
     loaded = true,
     path = "/Users/prajwalp/.local/share/nvim/site/pack/packer/start/cmp-nvim-lsp",
     url = "https://github.com/hrsh7th/cmp-nvim-lsp"
+  },
+  ["friendly-snippets"] = {
+    loaded = true,
+    path = "/Users/prajwalp/.local/share/nvim/site/pack/packer/start/friendly-snippets",
+    url = "https://github.com/rafamadriz/friendly-snippets"
   },
   ["git.nvim"] = {
     loaded = true,
@@ -209,10 +219,15 @@ _G.packer_plugins = {
     path = "/Users/prajwalp/.local/share/nvim/site/pack/packer/start/telescope.nvim",
     url = "https://github.com/nvim-telescope/telescope.nvim"
   },
-  ["tokyonight.nvim"] = {
+  ["vim-nightfly-guicolors"] = {
     loaded = true,
-    path = "/Users/prajwalp/.local/share/nvim/site/pack/packer/start/tokyonight.nvim",
-    url = "https://github.com/folke/tokyonight.nvim"
+    path = "/Users/prajwalp/.local/share/nvim/site/pack/packer/start/vim-nightfly-guicolors",
+    url = "https://github.com/bluz71/vim-nightfly-guicolors"
+  },
+  ["vim-surround"] = {
+    loaded = true,
+    path = "/Users/prajwalp/.local/share/nvim/site/pack/packer/start/vim-surround",
+    url = "https://github.com/tpope/vim-surround"
   }
 }
 
