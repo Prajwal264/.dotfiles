@@ -13,7 +13,7 @@ packer.startup(function(use)
   --  requires = { 'tjdevries/colorbuddy.nvim' }
   --  }
   -- use 'folke/tokyonight.nvim'
-  use("bluz71/vim-nightfly-guicolors")
+  use "bluz71/vim-nightfly-guicolors"
   use {
     'nvim-lualine/lualine.nvim',
     requires = { 'kyazdani42/nvim-web-devicons', opt = true }
@@ -29,12 +29,16 @@ packer.startup(function(use)
   use 'hrsh7th/cmp-nvim-lsp'
   use 'hrsh7th/nvim-cmp'
   use 'neovim/nvim-lspconfig'
+  use "tpope/vim-surround" -- add, delete, change surroundings (it's awesome)
+  use "rafamadriz/friendly-snippets" -- useful snippets
   use {
     'nvim-treesitter/nvim-treesitter',
     run = ':TSUpdate'
   }
   use 'windwp/nvim-autopairs'
   use 'windwp/nvim-ts-autotag'
+  -- commenting with gc
+  use "numToStr/Comment.nvim"
 
   use 'nvim-lua/plenary.nvim'
   use 'kyazdani42/nvim-web-devicons' -- File icons

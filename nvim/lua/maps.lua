@@ -33,8 +33,5 @@ keymap.set('', 'sl', '<C-w>l')
 keymap.set('t', '<Esc>', '<C-\\><c-n>')
 
 -- moving a line
-keymap.set('v', "<M-j>", ":m '>+1<CR>gv=gv")
-keymap.set('v', "<M-k>", ":m '<-2<CR>gv=gv")
-
--- copying
-keymap.set('n', "Y", "yg$")
+keymap.set('v', "J", ":m '>+1<CR>gv=gv")
+keymap.set('v', "K", ":m '<-2<CR>gv=gv")
