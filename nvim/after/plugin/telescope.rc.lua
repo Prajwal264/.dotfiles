@@ -2,8 +2,8 @@ local status, telescope = pcall(require, 'telescope')
 
 if (not status) then return end
 
-local actions = require('telescope.actions')
-local builtin = require('telescope.builtin')
+local actions = require('telescope.actions');
+local builtin = require('telescope.builtin');
 
 local function telescope_buffer_dir()
   return vim.fn.expand('%:p:n')
@@ -50,6 +50,7 @@ vim.keymap.set('n', '<leader>gs', builtin.git_status, opts)
 vim.keymap.set('n', '<leader>fw', builtin.live_grep, opts)
 vim.keymap.set('n', '<leader>jj', builtin.jumplist, opts)
 vim.keymap.set('n', '<leader>bf', builtin.jumplist, opts)
+vim.keymap.set('n', '<leader>fn', '<cmd>:Telescope find_files cwd=~/.config/nvim <CR>', opts);
 vim.keymap.set("n", "sf", function()
   telescope.extensions.file_browser.file_browser({
     path = "%:p:h",
