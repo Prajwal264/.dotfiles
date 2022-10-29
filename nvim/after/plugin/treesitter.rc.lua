@@ -15,6 +15,7 @@ ts.setup({
     'lua',
     'json',
     'css',
+    'svelte',
   },
   auto_tag = {
     enable = true

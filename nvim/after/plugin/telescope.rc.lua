@@ -44,6 +44,9 @@ local opts = { noremap = true, silent = true }
 vim.keymap.set('n', '<leader>ff',
   '<cmd>lua require("telescope.builtin").find_files({ no_ignore = false, hidden = true})<cr>',
   opts)
+vim.keymap.set('n', '<leader>fc',
+  '<cmd>lua require("telescope.builtin").git_commits({ no_ignore = false, hidden = true})<cr>',
+  opts)
 vim.keymap.set('n', '<leader>fw', '<cmd>lua require("telescope.builtin").live_grep()<cr>',
   opts)
 vim.keymap.set('n', '////', '<cmd>lua require("telescope.builtin").buffers()<cr>',
