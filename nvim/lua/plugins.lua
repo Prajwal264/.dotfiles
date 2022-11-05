@@ -55,5 +55,16 @@ packer.startup(function(use)
   use 'akinsho/nvim-bufferline.lua'
   use 'norcalli/nvim-colorizer.lua'
   use 'lewis6991/gitsigns.nvim'
-  use 'dinhhuy258/git.nvim' -- For git blame & browse
+  use 'dinhhuy258/git.nvim' -- For git blame & browser
+  -- DAP
+  use 'mfussenegger/nvim-dap'
+  use 'rcarriga/nvim-dap-ui'
+  use 'theHamsta/nvim-dap-virtual-text'
+  use 'nvim-telescope/telescope-dap.nvim'
+  use {
+    "microsoft/vscode-js-debug",
+    opt = true,
+    run = "npm install --legacy-peer-deps && npm run compile",
+  }
+  use { "mxsdev/nvim-dap-vscode-js", requires = { "mfussenegger/nvim-dap" } }
 end)
