@@ -54,12 +54,15 @@ end
 )
 
 dap.listeners.after.event_initialized["dapui_config"] = function()
+  require('nvim-tree.view').close()
   dapui.open({})
 end
 dap.listeners.before.event_terminated["dapui_config"] = function()
+  require('nvim-tree.view').open()
   dapui.close({})
 end
 dap.listeners.before.event_exited["dapui_config"] = function()
+  require('nvim-tree.view').open()
   dapui.close({})
 end
 -- local dapui = require("dapui")
@@ -99,8 +102,29 @@ require("dap-vscode-js").setup({
   }, -- which adapters to register in nvim-dap
 })
 
+local HOME = os.getenv "HOME"
+local DEBUGGER_LOCATION = HOME .. "/.local/share/nvim/vscode-chrome-debug"
+
+
+dap.adapters.chrome = {
+  type = "executable",
+  command = "node",
+  args = { DEBUGGER_LOCATION .. "/out/src/chromeDebug.js" },
+}
+
+
 for _, language in ipairs({ "typescript", "javascript", "typescriptreact", "javascriptreact" }) do
   dap.configurations[language] = {
+    {
+      type = "chrome",
+      request = "attach",
+      program = "${file}",
+      cwd = vim.fn.getcwd(),
+      sourceMaps = true,
+      protocol = "inspector",
+      port = 9222, -- google-chrome --remote-debugging-port=9222
+      webRoot = "${workspaceFolder}",
+    },
     {
       type = "pwa-node",
       request = "launch",
