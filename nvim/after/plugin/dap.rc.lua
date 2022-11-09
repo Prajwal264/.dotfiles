@@ -112,19 +112,24 @@ dap.adapters.chrome = {
   args = { DEBUGGER_LOCATION .. "/out/src/chromeDebug.js" },
 }
 
+dap.adapters.node2 = {
+  type = 'executable',
+  command = 'node',
+  args = { HOME .. '/Documents/projects/personal/external/vscode-node-debug2/out/src/nodeDebug.js' },
+}
 
 for _, language in ipairs({ "typescript", "javascript", "typescriptreact", "javascriptreact" }) do
   dap.configurations[language] = {
-    {
-      type = "chrome",
-      request = "attach",
-      program = "${file}",
-      cwd = vim.fn.getcwd(),
-      sourceMaps = true,
-      protocol = "inspector",
-      port = 9222, -- google-chrome --remote-debugging-port=9222
-      webRoot = "${workspaceFolder}",
-    },
+    -- {
+    --   type = "chrome",
+    --   request = "attach",
+    --   program = "${file}",
+    --   cwd = vim.fn.getcwd(),
+    --   sourceMaps = true,
+    --   protocol = "inspector",
+    --   port = 9222, -- google-chrome --remote-debugging-port=9222
+    --   webRoot = "${workspaceFolder}",
+    -- },
     {
       type = "pwa-node",
       request = "launch",
