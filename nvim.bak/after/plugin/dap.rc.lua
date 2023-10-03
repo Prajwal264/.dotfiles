@@ -105,31 +105,42 @@ require("dap-vscode-js").setup({
 local HOME = os.getenv "HOME"
 local DEBUGGER_LOCATION = HOME .. "/.local/share/nvim/vscode-chrome-debug"
 
+-- set console for pure typescript program (e.g. cli program).
+dap.defaults.fallback.external_terminal = {
+  command = "/usr/bin/alacritty",
+  args = { "-e" },
+}
+dap.defaults.fallback.force_external_terminal = true
+dap.defaults.fallback.terminal_win_cmd = "50vsplit new"
+dap.defaults.fallback.focus_terminal = true
+dap.set_log_level("INFO")
+
+local debugger_location = os.getenv("HOME") .. "/Software/vscode-node-debug2"
 
 dap.adapters.chrome = {
   type = "executable",
   command = "node",
   args = { DEBUGGER_LOCATION .. "/out/src/chromeDebug.js" },
 }
-
-dap.adapters.node2 = {
-  type = 'executable',
-  command = 'node',
-  args = { HOME .. '/Documents/projects/personal/external/vscode-node-debug2/out/src/nodeDebug.js' },
+dap.adapters.node = {
+  type = "executable",
+  command = "node",
+  args = { debugger_location .. "/out/src/nodeDebug.js" },
 }
 
 for _, language in ipairs({ "typescript", "javascript", "typescriptreact", "javascriptreact" }) do
   dap.configurations[language] = {
-    -- {
-    --   type = "chrome",
-    --   request = "attach",
-    --   program = "${file}",
-    --   cwd = vim.fn.getcwd(),
-    --   sourceMaps = true,
-    --   protocol = "inspector",
-    --   port = 9222, -- google-chrome --remote-debugging-port=9222
-    --   webRoot = "${workspaceFolder}",
-    -- },
+    {
+      name = "ts-node (Node2 with ts-node)",
+      type = "node",
+      request = "launch",
+      cwd = vim.loop.cwd(),
+      runtimeArgs = { "-r", "ts-node/register" },
+      runtimeExecutable = "node",
+      args = { "--inspect", "${file}" },
+      sourceMaps = true,
+      skipFiles = { "<node_internals>/**", "node_modules/**" },
+    },
     {
       type = "pwa-node",
       request = "launch",
