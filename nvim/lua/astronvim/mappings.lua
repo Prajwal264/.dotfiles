@@ -409,6 +409,19 @@ if is_available "nvim-ufo" then
   maps.n["zp"] = { function() require("ufo").peekFoldedLinesUnderCursor() end, desc = "Peek fold" }
 end
 
+-- Improved Code Folding
+if is_available "harpoon" then
+  maps.n["<leader>hh"] = { function() require("harpoon.ui").toggle_quick_menu() end, desc = "Toggles harpoon quick menu" }
+  maps.n["<leader>hm"] = {
+    function()
+      require("harpoon.mark").add_file()
+      require("astronvim.utils").notify "Added file to harpoon"
+    end, desc = "Adds file to harpoon"
+  }
+  maps.n["<leader>h>"] = { function() require("harpoon.ui").nav_next() end, desc = "Go to next file in harpoon" }
+  maps.n["<leader>h<"] = { function() require("harpoon.ui").nav_prev() end, desc = "Go to previous file in harpoon" }
+end
+
 -- Stay in indent mode
 maps.v["<S-Tab>"] = { "<gv", desc = "Unindent line" }
 maps.v["<Tab>"] = { ">gv", desc = "Indent line" }
