@@ -418,6 +418,7 @@ if is_available "harpoon" then
       require("astronvim.utils").notify "Added file to harpoon"
     end, desc = "Adds file to harpoon"
   }
+  maps.n["<leader>hy"] = { function() require("harpoon.term").gotoTerminal(1) end, desc = "Go to terminal" }
   maps.n["<leader>h>"] = { function() require("harpoon.ui").nav_next() end, desc = "Go to next file in harpoon" }
   maps.n["<leader>h<"] = { function() require("harpoon.ui").nav_prev() end, desc = "Go to previous file in harpoon" }
 end

@@ -133,7 +133,7 @@ M.on_attach = function(client, bufnr)
   lsp_mappings.n["<leader>ld"] = { function() vim.diagnostic.open_float() end, desc = "Hover diagnostics" }
   lsp_mappings.n["[d"] = { function() vim.diagnostic.goto_prev() end, desc = "Previous diagnostic" }
   lsp_mappings.n["]d"] = { function() vim.diagnostic.goto_next() end, desc = "Next diagnostic" }
-  lsp_mappings.n["gl"] = { function() vim.diagnostic.open_float() end, desc = "Hover diagnostics" }
+  lsp_mappings.n["L"] = { function() vim.diagnostic.open_float() end, desc = "Hover diagnostics" }
 
   if is_available "telescope.nvim" then
     lsp_mappings.n["<leader>lD"] =

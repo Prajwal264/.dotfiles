@@ -1,4 +1,5 @@
 return {
+  updater = { channel = "nightly" },
   -- colorscheme = "catppuccin",
   --
   -- plugins = {
