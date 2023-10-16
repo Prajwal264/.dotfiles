@@ -50,6 +50,25 @@ return {
                 "${workspaceFolder}/**",
                 "!**/node_modules/**",
             },
+          },
+          {
+            type = "pwa-node",
+            request = "launch",
+            name = "Launch microservices",
+            program = "${file}",
+            arg = { '--exec','ts-node', '-r', 'dotenv/config', './src/index.ts' },
+            cwd = "${workspaceFolder}",
+            sourceMaps = true,
+            protocol = "inspector",
+            console = "integratedTerminal",
+            outFiles = { "${workspaceFolder}/dist/**/*.js" },
+            runtimeExecutable = "nodemon",
+            skipFiles = { "<node_internals>/**", "node_modules/**" },
+            resolveSourceMapLocations = {
+                "${workspaceFolder}/dist/**/*.js",
+                "${workspaceFolder}/**",
+                "!**/node_modules/**",
+            },
           }
         }
       }
