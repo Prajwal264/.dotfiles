@@ -2,10 +2,21 @@ return {
   "kdheepak/lazygit.nvim",
   cmd = { "LazyGit", "LazyGitConfig" },
   keys = {
-    { "<leader>gg", ":LazyGit<cr>", silent = true, desc = "LazyGit", mode = "n" },
+    {
+      "<leader>gg",
+      function()
+        local cmd = [[lua require"lazygit".lazygit(nil)]]
+        vim.api.nvim_command(cmd)
+
+        vim.cmd('stopinsert')
+        vim.cmd([[execute "normal i"]])
+        vim.fn.feedkeys('j')
+        vim.api.nvim_buf_set_keymap(0, 't', '<Esc>', '<Esc>', {noremap = true, silent = true})
+      end,
+      silent = true,
+      desc = "LazyGit", 
+      mode = "n"
+    },
   },
-  config = function()
-    vim.g.lazygit_floating_window_border_chars = { ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ' } -- no borders
-  end,
 }
 

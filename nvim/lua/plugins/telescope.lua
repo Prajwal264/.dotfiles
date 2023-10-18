@@ -2,6 +2,7 @@ return {
   "nvim-telescope/telescope.nvim",
   dependencies = {
     { "nvim-telescope/telescope-fzf-native.nvim", enabled = vim.fn.executable "make" == 1, build = "make" },
+    { "kdheepak/lazygit.nvim", enabled = vim.fn.executable "make" == 1, build = "make" },
   },
   cmd = "Telescope",
   opts = function()
