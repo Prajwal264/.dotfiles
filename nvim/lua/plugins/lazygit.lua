@@ -1,9 +1,11 @@
 return {
   "kdheepak/lazygit.nvim",
-  dependencies = {
-    "nvim-lua/plenary.nvim",
+  cmd = { "LazyGit", "LazyGitConfig" },
+  keys = {
+    { "<leader>gg", ":LazyGit<cr>", silent = true, desc = "LazyGit", mode = "n" },
   },
-	keys = {
-		{ "<leader>gg", "<cmd>LazyGit<cr>", desc = "Toggle LazyGit" },
-	},
+  config = function()
+    vim.g.lazygit_floating_window_border_chars = { ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ' } -- no borders
+  end,
 }
+
