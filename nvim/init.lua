@@ -20,4 +20,10 @@ if astronvim.default_colorscheme then
   end
 end
 
+vim.api.nvim_exec(
+  [[
+let $GIT_EDITOR = "nvr -cc split --remote-wait +'set bufhidden=wipe'"
+]] ,
+  false
+)
 require("astronvim.utils").conditional_func(astronvim.user_opts("polish", nil, false), true)

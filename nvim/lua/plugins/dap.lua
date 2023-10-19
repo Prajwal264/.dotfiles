@@ -15,10 +15,6 @@ return {
       { "<leader>db", function() require 'dap'.toggle_breakpoint() end },
       { "<leader>dc", function() require 'dap'.continue() end },
       { "<leader>dC", function() require 'dap'.run_to_cursor() end },
-      { "<leader>dt", function() require 'dap'.terminate() end },
-      { "<leader>do",     function() require 'dap'.step_over() end },
-      { "<leader>di",     function() require 'dap'.step_into() end },
-      { "<leader>dO",     function() require 'dap'.step_out() end },
     },
     config = function()
       -- git clone https://github.com/microsoft/vscode-js-debug ~/.DAP/vscode-js-debug --depth=1
