@@ -52,7 +52,7 @@ local options = astronvim.user_opts("options", {
     mapleader = " ", -- set leader key
     maplocalleader = ",", -- set default local leader key
     -- AstroNvim specific global options
-    autoformat_enabled = true, -- enable or disable auto formatting at start (lsp.formatting.format_on_save must be enabled)
+    autoformat_enabled = false, -- enable or disable auto formatting at start (lsp.formatting.format_on_save must be enabled)
     autopairs_enabled = true, -- enable autopairs at start
     cmp_enabled = true, -- enable completion at start
     codelens_enabled = true, -- enable or disable automatic codelens refreshing for lsp that support it
