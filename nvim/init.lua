@@ -26,4 +26,5 @@ let $GIT_EDITOR = "nvr -cc split --remote-wait +'set bufhidden=wipe'"
 ]] ,
   false
 )
+vim.opt.fixendofline = false
 require("astronvim.utils").conditional_func(astronvim.user_opts("polish", nil, false), true)
