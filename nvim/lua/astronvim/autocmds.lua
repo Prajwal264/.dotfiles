@@ -120,6 +120,8 @@ autocmd("FileType", {
   callback = function() vim.opt_local.buflisted = false end,
 })
 
+
+
 autocmd("BufEnter", {
   desc = "Quit AstroNvim if more than one window is open and only sidebar windows are list",
   group = augroup("auto_quit", { clear = true }),
@@ -246,6 +248,9 @@ autocmd({ "VimEnter", "ColorScheme" }, {
         end
       end
     end
+		vim.api.nvim_set_hl(0, 'DapBreakpoint', { ctermbg = 0, fg = '#993939' })
+		vim.api.nvim_set_hl(0, 'DapLogPoint', { ctermbg = 0, fg = '#61afef' })
+		vim.api.nvim_set_hl(0, 'DapStopped', { ctermbg = 0, fg = '#98c379' })
     astroevent "ColorScheme"
   end,
 })
@@ -281,3 +286,8 @@ cmd("AstroRollback", function() require("astronvim.utils.updater").rollback() en
 cmd("AstroUpdate", function() require("astronvim.utils.updater").update() end, { desc = "Update AstroNvim" })
 cmd("AstroVersion", function() require("astronvim.utils.updater").version() end, { desc = "Check AstroNvim Version" })
 cmd("AstroReload", function() require("astronvim.utils").reload() end, { desc = "Reload AstroNvim (Experimental)" })
+vim.fn.sign_define('DapBreakpoint', { text=' ', texthl='DapBreakpoint' })
+vim.fn.sign_define('DapBreakpointCondition', { text=' ﳁ', texthl='DapBreakpoint' })
+vim.fn.sign_define('DapBreakpointRejected', { text=' ', texthl='DapBreakpoint' })
+vim.fn.sign_define('DapLogPoint', { text=' ', texthl='DapLogPoint' })
+vim.fn.sign_define('DapStopped', { text=' ', texthl='DapStopped' });

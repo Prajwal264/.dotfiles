@@ -381,6 +381,7 @@ if is_available "nvim-dap" then
   maps.n["<leader>dq"] = { function() require("dap").close() end, desc = "Close Session" }
   maps.n["<leader>dQ"] = { function() require("dap").terminate() end, desc = "Terminate Session (S-F5)" }
   maps.n["<leader>dp"] = { function() require("dap").pause() end, desc = "Pause (F6)" }
+  maps.n["<leader>dd"] = { function() require("dap").clear_breakpoints() end, desc = "Remove all breakpoints" }
   maps.n["<leader>dr"] = { function() require("dap").restart_frame() end, desc = "Restart (C-F5)" }
   maps.n["<leader>dR"] = { function() require("dap").repl.toggle() end, desc = "Toggle REPL" }
   maps.n["<leader>ds"] = { function() require("dap").run_to_cursor() end, desc = "Run To Cursor" }
