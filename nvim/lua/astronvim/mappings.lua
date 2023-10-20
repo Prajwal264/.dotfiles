@@ -409,7 +409,7 @@ if is_available "nvim-ufo" then
   maps.n["zp"] = { function() require("ufo").peekFoldedLinesUnderCursor() end, desc = "Peek fold" }
 end
 
--- Improved Code Folding
+-- Navigation between active files
 if is_available "harpoon" then
   maps.n["<leader>hh"] = { function() require("harpoon.ui").toggle_quick_menu() end, desc = "Toggles harpoon quick menu" }
   maps.n["<leader>hm"] = {
