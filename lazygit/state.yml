@@ -1,14 +1,8 @@
 lastupdatecheck: 0
 recentrepos:
-- /Users/prajwalp/.config
-- /Users/prajwalp/Documents/projects/lms-portal-v2
-- /Users/prajwalp/Documents/projects/analytics-service
-- /Users/prajwalp/Documents/projects/evaluation-service
-- /Users/prajwalp/Documents/projects/course-service
-- /Users/prajwalp/Documents/projects
-- /Users/prajwalp/Documents/projects/lms-portal
-- /Users/prajwalp/Documents/projects/quiz-service
-- /Users/prajwalp/Documents/projects/assignment-service
+- /Users/prajwal/.config
+- /Users/prajwal/Documents/projects/work/unext/lumen/unext-react-clone
+- /Users/prajwal/Documents/projects/side-projects/vimasa-website
 startuppopupversion: 5
 customcommandshistory:
 - git pull origin develop
@@ -24,4 +18,3 @@ customcommandshistory:
 - git pull origin master
 - git pull origin qa
 hidecommandlog: false
-ignorewhitespaceindiffview: false
