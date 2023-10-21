@@ -1,0 +1,30 @@
+quitOnTopLevelReturn: true
+showOutput: true
+os:
+  editCommand: 'nvim'
+  editCommandTemplate: '{{editor}} --server /tmp/nvim-server.pipe --remote-tab "$(pwd)/{{filename}}"'
+services:
+  'git.u-next.com': 'gitlab:git.u-next.com'
+customCommands:
+  - key: 'f'
+    context: 'localBranches'
+    prompts:
+      - type: 'menu'
+        title: 'Which branch do you want to Create PR to ?'
+        key: 'TargetBranch'
+        options:
+          - name: 'develop'
+            description: 'The Develop Environment Branch'
+            value: 'develop'
+          - name: 'qa'
+            description: 'The QA Environment Branch'
+            value: 'qa'
+          - name: 'master'
+            description: 'The Master Environment Branch'
+            value: 'master'
+      - type: 'input'
+        title: 'Input your PR title'
+        key: 'PullRequestTitle'
+        initialValue: ''
+    command: '{{ $url := slice (index .SelectedRemote.Urls 0) 0 (len (slice (printf "%*s" (len (index .SelectedRemote.Urls 0)) "") 4)) }} {{ $target_branch_prefix := "[Master]:" }} {{ if eq .Form.TargetBranch "qa" }} {{ $target_branch_prefix = "[QA]:" }} {{ else if eq .Form.TargetBranch "develop" }} {{ $target_branch_prefix = "" }} {{ end }} open "{{ $url }}/-/merge_requests/new?merge_request[source_branch]={{ .SelectedLocalBranch.Name }}&merge_request[target_branch]={{ .Form.TargetBranch }}&merge_request[title]={{ $target_branch_prefix }} {{ .Form.PullRequestTitle }}"'
+    loadingText: 'Opening Pull Request'

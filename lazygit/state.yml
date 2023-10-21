@@ -1,7 +1,27 @@
 lastupdatecheck: 0
 recentrepos:
+- /Users/prajwalp/.config
 - /Users/prajwalp/Documents/projects/lms-portal-v2
+- /Users/prajwalp/Documents/projects/analytics-service
+- /Users/prajwalp/Documents/projects/evaluation-service
+- /Users/prajwalp/Documents/projects/course-service
+- /Users/prajwalp/Documents/projects
+- /Users/prajwalp/Documents/projects/lms-portal
+- /Users/prajwalp/Documents/projects/quiz-service
+- /Users/prajwalp/Documents/projects/assignment-service
 startuppopupversion: 5
-customcommandshistory: []
+customcommandshistory:
+- git pull origin develop
+- git merge --abort
+- git checkout qa
+- git stash apply
+- git checkout -b delete-objectives
+- q
+- git pull origin delete-objectives
+- git checkout dev/delete-objectives
+- git pull origin timespent-inactive
+- git pull origin report-issue
+- git pull origin master
+- git pull origin qa
 hidecommandlog: false
 ignorewhitespaceindiffview: false

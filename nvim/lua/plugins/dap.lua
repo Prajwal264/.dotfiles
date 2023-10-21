@@ -233,7 +233,7 @@ return {
       local dap, dapui = require("dap"), require("dapui")
       dap.listeners.after.event_initialized["dapui_config"] = function()
         dapui.open({ reset = true })
-        require('neo-tree.ui.renderer')
+        require('neo-tree.command')._command('close')
       end
       dap.listeners.before.event_terminated["dapui_config"] = dapui.close
       dap.listeners.before.event_exited["dapui_config"] = dapui.close
