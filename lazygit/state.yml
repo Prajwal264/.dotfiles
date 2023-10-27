@@ -1,8 +1,8 @@
 lastupdatecheck: 0
 recentrepos:
 - /Users/prajwalp/.config
-- /Users/prajwalp/Documents/projects/extras/lumen-scripts
 - /Users/prajwalp/Documents/projects/evaluation-service
+- /Users/prajwalp/Documents/projects/extras/lumen-scripts
 - /Users/prajwalp/Documents/projects/lms-portal
 - /Users/prajwalp/Documents/projects/lms-integration-service
 - /Users/prajwalp/Documents/projects/course-service
@@ -13,6 +13,7 @@ recentrepos:
 - /Users/prajwalp/Documents/projects/assignment-service
 startuppopupversion: 5
 customcommandshistory:
+- git fetch
 - npm run prepare
 - git init
 - git pull origin develop
@@ -28,5 +29,6 @@ customcommandshistory:
 - git pull origin master
 - git pull origin qa
 - husky init
+- git fetch && git checkout  v7.8.3
 hidecommandlog: false
 ignorewhitespaceindiffview: false
