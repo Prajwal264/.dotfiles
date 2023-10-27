@@ -26,7 +26,7 @@ customCommands:
         title: 'Input your PR title'
         key: 'PullRequestTitle'
         initialValue: ''
-    command: '{{ $url := slice (index .SelectedRemote.Urls 0) 0 (len (slice (printf "%*s" (len (index .SelectedRemote.Urls 0)) "") 4)) }} {{ $target_branch_prefix := "[Master]:" }} {{ if eq .Form.TargetBranch "qa" }} {{ $target_branch_prefix = "[QA]:" }} {{ else if eq .Form.TargetBranch "develop" }} {{ $target_branch_prefix = "" }} {{ end }} open "{{ $url }}/-/merge_requests/new?merge_request[source_branch]={{ .SelectedLocalBranch.Name }}&merge_request[target_branch]={{ .Form.TargetBranch }}&merge_request[title]={{ $target_branch_prefix }} {{ .Form.PullRequestTitle }}"'
+    command: '{{ $url := slice (index .SelectedRemote.Urls 0) 0 (len (slice (printf "%*s" (len (index .SelectedRemote.Urls 0)) "") 4)) }} {{ $target_branch_prefix := "[Master]" }} {{ if eq .Form.TargetBranch "qa" }} {{ $target_branch_prefix = "[QA]" }} {{ else if eq .Form.TargetBranch "develop" }} {{ $target_branch_prefix = "" }} {{ end }} open "{{ $url }}/-/merge_requests/new?merge_request[source_branch]={{ .SelectedLocalBranch.Name }}&merge_request[target_branch]={{ .Form.TargetBranch }}&merge_request[title]={{ $target_branch_prefix }}{{ .Form.PullRequestTitle }}"'
     loadingText: 'Opening Pull Request'
 git:
   paging:
