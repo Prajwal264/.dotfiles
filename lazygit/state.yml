@@ -12,20 +12,20 @@ recentrepos:
 - /Users/prajwalp/Documents/projects/assignment-service
 startuppopupversion: 5
 customcommandshistory:
-- npm run prepare
-- git init
-- git pull origin develop
-- git merge --abort
-- git checkout qa
-- git stash apply
-- git checkout -b delete-objectives
-- q
-- git pull origin delete-objectives
-- git checkout dev/delete-objectives
-- git pull origin timespent-inactive
-- git pull origin report-issue
-- git pull origin master
-- git pull origin qa
 - husky init
+- git pull origin qa
+- git pull origin master
+- git pull origin report-issue
+- git pull origin timespent-inactive
+- git checkout dev/delete-objectives
+- git pull origin delete-objectives
+- q
+- git checkout -b delete-objectives
+- git stash apply
+- git checkout qa
+- git merge --abort
+- git pull origin develop
+- git init
+- npm run prepare
 hidecommandlog: false
 ignorewhitespaceindiffview: false

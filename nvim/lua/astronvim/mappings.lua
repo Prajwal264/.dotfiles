@@ -305,6 +305,8 @@ if is_available "telescope.nvim" then
     end,
     desc = "Search symbols",
   }
+  maps.n['<leader>tgc'] = { function() require("astronvim.telescope-git").git_commits() end, desc = 'Show Git commits in Telescope' }
+  maps.n['<leader>tgs'] = { function() require("astronvim.telescope-git").git_status() end, desc = 'Show Git status in Telescope' }
 end
 
 -- Terminal
