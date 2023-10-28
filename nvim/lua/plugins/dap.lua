@@ -89,7 +89,12 @@ return {
             },
             type = "pwa-node",
             runtimeArgs = {"--respawn"},
-            args = {"${workspaceFolder}/src/index.ts"}
+            args = {"${workspaceFolder}/src/index.ts"},
+            resolveSourceMapLocations = {
+                "${workspaceFolder}/dist/**/*.js",
+                "${workspaceFolder}/**",
+                "!**/node_modules/**",
+            },
           }
         }
       }
