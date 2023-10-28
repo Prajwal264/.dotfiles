@@ -1,11 +1,11 @@
 lastupdatecheck: 0
 recentrepos:
 - /Users/prajwalp/.config
+- /Users/prajwalp/Documents/projects/course-service
+- /Users/prajwalp/Documents/projects/extras/lumen-scripts
 - /Users/prajwalp/Documents/projects/lms-portal
 - /Users/prajwalp/Documents/projects/evaluation-service
-- /Users/prajwalp/Documents/projects/extras/lumen-scripts
 - /Users/prajwalp/Documents/projects/lms-integration-service
-- /Users/prajwalp/Documents/projects/course-service
 - /Users/prajwalp/Documents/projects/analytics-service
 - /Users/prajwalp/Documents/projects/lms-portal-v2
 - /Users/prajwalp/Documents/projects
@@ -13,6 +13,7 @@ recentrepos:
 - /Users/prajwalp/Documents/projects/assignment-service
 startuppopupversion: 5
 customcommandshistory:
+- git checkout feat/astrovim
 - git fetch
 - npm run prepare
 - git init
@@ -30,5 +31,6 @@ customcommandshistory:
 - git pull origin qa
 - husky init
 - git fetch && git checkout  v7.8.3
+- lazygit --print-config-dir
 hidecommandlog: false
 ignorewhitespaceindiffview: false
