@@ -17,4 +17,5 @@ customcommandshistory:
 - git pull origin report-issue
 - git pull origin master
 - git pull origin qa
+- git config pull.rebase false
 hidecommandlog: false
