@@ -22,6 +22,17 @@ return {
       -- npm install --legacy-peer-deps
       -- npm run compile
 
+      -- vim.fn.sign_define('DapBreakpoint', { text = ' ', texthl = 'Error', linehl = '', numhl = '' })
+      -- vim.fn.sign_define('DapStopped', { text = '➤', texthl = 'DiagnosticInfo', linehl = '', numhl = '' })
+      -- vim.fn.sign_define('DapBreakpointCondition', { text = '鬒', texthl = 'Todo', linehl = '', numhl = '' })
+      -- vim.fn.sign_define('DapBreakpointRejected', { text = ' ', texthl = 'Error', linehl = '', numhl = '' })
+      -- vim.fn.sign_define('DapLogPoint', { text = ' ', texthl = 'DiagnosticHint', linehl = '', numhl = '' })
+
+      local sign = vim.fn.sign_define
+
+      sign("DapBreakpoint", { text = "●", texthl = "DapBreakpoint", linehl = "", numhl = ""})
+      sign("DapBreakpointCondition", { text = "●", texthl = "DapBreakpointCondition", linehl = "", numhl = ""})
+      sign("DapLogPoint", { text = "◆", texthl = "DapLogPoint", linehl = "", numhl = ""})
       require('dap-vscode-js').setup({
         node_path = 'ts-node',
         debugger_path = os.getenv('HOME') .. '/.DAP/vscode-js-debug',
@@ -60,6 +71,25 @@ return {
             outFiles = { "${workspaceFolder}/dist/**/*.js" },
             runtimeExecutable = "nodemon",
             skipFiles = { "<node_internals>/**", "node_modules/**" },
+            resolveSourceMapLocations = {
+                "${workspaceFolder}/dist/**/*.js",
+                "${workspaceFolder}/**",
+                "!**/node_modules/**",
+            },
+          },
+          {
+            console = "integratedTerminal",
+            internalConsoleOptions = "neverOpen",
+            name = "ts-node-dev",
+            restart = true,
+            request = "launch",
+            runtimeExecutable = "tsnd",
+            skipFiles = {
+              "<node_internals>/**"
+            },
+            type = "pwa-node",
+            runtimeArgs = {"--respawn"},
+            args = {"${workspaceFolder}/src/index.ts"},
             resolveSourceMapLocations = {
                 "${workspaceFolder}/dist/**/*.js",
                 "${workspaceFolder}/**",
@@ -229,8 +259,8 @@ return {
       --   }
       -- end
       --
-      require("dapui").setup()
       local dap, dapui = require("dap"), require("dapui")
+      dapui.setup()
       dap.listeners.after.event_initialized["dapui_config"] = function()
         dapui.open({ reset = true })
         require('neo-tree.command')._command('close')

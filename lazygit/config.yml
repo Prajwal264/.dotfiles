@@ -26,7 +26,7 @@ customCommands:
         title: 'Input your PR title'
         key: 'PullRequestTitle'
         initialValue: ''
-    command: '{{ $url := slice (index .SelectedRemote.Urls 0) 0 (len (slice (printf "%*s" (len (index .SelectedRemote.Urls 0)) "") 4)) }} {{ $target_branch_prefix := "[Master]:" }} {{ if eq .Form.TargetBranch "qa" }} {{ $target_branch_prefix = "[QA]:" }} {{ else if eq .Form.TargetBranch "develop" }} {{ $target_branch_prefix = "" }} {{ end }} open "{{ $url }}/-/merge_requests/new?merge_request[source_branch]={{ .SelectedLocalBranch.Name }}&merge_request[target_branch]={{ .Form.TargetBranch }}&merge_request[title]={{ $target_branch_prefix }} {{ .Form.PullRequestTitle }}"'
+    command: '{{ $url := (index .SelectedRemote.Urls 0) }} {{ $target_branch_prefix := "[Master]" }} {{ if eq .Form.TargetBranch "qa" }} {{ $target_branch_prefix = "[QA]" }} {{ else if eq .Form.TargetBranch "develop" }} {{ $target_branch_prefix = "" }} {{ end }} open "{{ $url }}/-/merge_requests/new?merge_request[source_branch]={{ .SelectedLocalBranch.Name }}&merge_request[target_branch]={{ .Form.TargetBranch }}&merge_request[title]={{ $target_branch_prefix }}{{ .Form.PullRequestTitle }}"'
     loadingText: 'Opening Pull Request'
   - key: 'f'
     context: 'localBranches'
@@ -52,3 +52,29 @@ customCommands:
     command: "git pull origin {{ .Form.BranchType }}"
     command: "git checkout -b {{ .Form.BranchName }}"
     loadingText: 'Creating feature branch'
+git:
+  paging:
+    colorArg: always
+    pager: delta --dark --paging=never
+theme:
+  activeBorderColor:
+    - '#c6a0f6'
+    - bold
+  inactiveBorderColor:
+    - '#a5adcb'
+  optionsTextColor:
+    - '#8aadf4'
+  selectedLineBgColor:
+    - '#363a4f'
+  selectedRangeBgColor:
+    - '#363a4f'
+  cherryPickedCommitBgColor:
+    - '#494d64'
+  cherryPickedCommitFgColor:
+    - '#c6a0f6'
+  unstagedChangesColor:
+    - '#ed8796'
+  defaultFgColor:
+    - '#cad3f5'
+  searchingActiveBorderColor:
+    - '#eed49f'

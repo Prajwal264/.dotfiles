@@ -305,6 +305,8 @@ if is_available "telescope.nvim" then
     end,
     desc = "Search symbols",
   }
+  maps.n['<leader>tgc'] = { function() require("astronvim.telescope-git").git_commits() end, desc = 'Show Git commits in Telescope' }
+  maps.n['<leader>tgs'] = { function() require("astronvim.telescope-git").git_status() end, desc = 'Show Git status in Telescope' }
 end
 
 -- Terminal
@@ -358,16 +360,10 @@ if is_available "nvim-dap" then
     end,
     desc = "Debugger: Conditional Breakpoint",
   }
-  maps.n["<F29>"] = { function() require("dap").restart_frame() end, desc = "Debugger: Restart" } -- Control+F5
-  maps.n["<F6>"] = { function() require("dap").pause() end, desc = "Debugger: Pause" }
-  maps.n["<F9>"] = { function() require("dap").toggle_breakpoint() end, desc = "Debugger: Toggle Breakpoint" }
-  maps.n["<F10>"] = { function() require("dap").step_over() end, desc = "Debugger: Step Over" }
-  maps.n["<F11>"] = { function() require("dap").step_into() end, desc = "Debugger: Step Into" }
-  maps.n["<F23>"] = { function() require("dap").step_out() end, desc = "Debugger: Step Out" } -- Shift+F11
-  maps.n["<leader>db"] = { function() require("dap").toggle_breakpoint() end, desc = "Toggle Breakpoint (F9)" }
-  maps.n["<leader>dB"] = { function() require("dap").clear_breakpoints() end, desc = "Clear Breakpoints" }
-  maps.n["<leader>dc"] = { function() require("dap").continue() end, desc = "Start/Continue (F5)" }
-  maps.n["<leader>dC"] = {
+  maps.n["<leader>bb"] = { function() require("dap").toggle_breakpoint() end, desc = "Toggle Breakpoint (F9)" }
+  maps.n["<leader>bB"] = { function() require("dap").clear_breakpoints() end, desc = "Clear Breakpoints" }
+  maps.n["<leader>bs"] = { function() require("dap").continue() end, desc = "Start/Continue (F5)" }
+  maps.n["<leader>bC"] = {
     function()
       vim.ui.input({ prompt = "Condition: " }, function(condition)
         if condition then require("dap").set_breakpoint(condition) end
@@ -375,19 +371,18 @@ if is_available "nvim-dap" then
     end,
     desc = "Conditional Breakpoint (S-F9)",
   }
-  maps.n["<leader>di"] = { function() require("dap").step_into() end, desc = "Step Into (F11)" }
-  maps.n["<leader>do"] = { function() require("dap").step_over() end, desc = "Step Over (F10)" }
-  maps.n["<leader>dO"] = { function() require("dap").step_out() end, desc = "Step Out (S-F11)" }
-  maps.n["<leader>dq"] = { function() require("dap").close() end, desc = "Close Session" }
-  maps.n["<leader>dQ"] = { function() require("dap").terminate() end, desc = "Terminate Session (S-F5)" }
-  maps.n["<leader>dp"] = { function() require("dap").pause() end, desc = "Pause (F6)" }
-  maps.n["<leader>dd"] = { function() require("dap").clear_breakpoints() end, desc = "Remove all breakpoints" }
-  maps.n["<leader>dr"] = { function() require("dap").restart_frame() end, desc = "Restart (C-F5)" }
-  maps.n["<leader>dR"] = { function() require("dap").repl.toggle() end, desc = "Toggle REPL" }
-  maps.n["<leader>ds"] = { function() require("dap").run_to_cursor() end, desc = "Run To Cursor" }
+  maps.n["<leader>bi"] = { function() require("dap").step_into() end, desc = "Step Into (F11)" }
+  maps.n["<leader>bn"] = { function() require("dap").step_over() end, desc = "Step Over (F10)" }
+  maps.n["<leader>bo"] = { function() require("dap").step_out() end, desc = "Step Out (S-F11)" }
+  maps.n["<leader>bq"] = { function() require("dap").close() end, desc = "Close Session" }
+  maps.n["<leader>bQ"] = { function() require("dap").terminate() end, desc = "Terminate Session (S-F5)" }
+  maps.n["<leader>bp"] = { function() require("dap").pause() end, desc = "Pause (F6)" }
+  maps.n["<leader>br"] = { function() require("dap").restart_frame() end, desc = "Restart (C-F5)" }
+  maps.n["<leader>bR"] = { function() require("dap").repl.toggle() end, desc = "Toggle REPL" }
+  maps.n["<leader>bc"] = { function() require("dap").run_to_cursor() end, desc = "Run To Cursor" }
 
   if is_available "nvim-dap-ui" then
-    maps.n["<leader>dE"] = {
+    maps.n["<leader>E"] = {
       function()
         vim.ui.input({ prompt = "Expression: " }, function(expr)
           if expr then require("dapui").eval(expr) end
@@ -395,9 +390,9 @@ if is_available "nvim-dap" then
       end,
       desc = "Evaluate Input",
     }
-    maps.v["<leader>dE"] = { function() require("dapui").eval() end, desc = "Evaluate Input" }
+    maps.v["E"] = { function() require("dapui").eval() end, desc = "Evaluate Input" }
     maps.n["<leader>du"] = { function() require("dapui").toggle() end, desc = "Toggle Debugger UI" }
-    maps.n["<leader>dh"] = { function() require("dap.ui.widgets").hover() end, desc = "Debugger Hover" }
+    maps.n["H"] = { function() require("dap.ui.widgets").hover() end, desc = "Debugger Hover" }
   end
 end
 
@@ -422,6 +417,10 @@ if is_available "harpoon" then
   maps.n["<leader>hy"] = { function() require("harpoon.term").gotoTerminal(1) end, desc = "Go to terminal" }
   maps.n["<leader>h>"] = { function() require("harpoon.ui").nav_next() end, desc = "Go to next file in harpoon" }
   maps.n["<leader>h<"] = { function() require("harpoon.ui").nav_prev() end, desc = "Go to previous file in harpoon" }
+  maps.n["<leader>h1"] = { function() require("harpoon.ui").nav_file(1) end, desc = "Go to file 1" }
+  maps.n["<leader>h2"] = { function() require("harpoon.ui").nav_file(2) end, desc = "Go to file 2" }
+  maps.n["<leader>h3"] = { function() require("harpoon.ui").nav_file(3) end, desc = "Go to file 3" }
+  maps.n["<leader>h4"] = { function() require("harpoon.ui").nav_file(4) end, desc = "Go to file 4" }
 end
 
 -- Stay in indent mode
