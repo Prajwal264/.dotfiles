@@ -457,5 +457,9 @@ maps.n["<leader>uw"] = { ui.toggle_wrap, desc = "Toggle wrap" }
 maps.n["<leader>uy"] = { ui.toggle_syntax, desc = "Toggle syntax highlight" }
 maps.n["<leader>uh"] = { ui.toggle_foldcolumn, desc = "Toggle foldcolumn" }
 maps.n["<leader>s"] = { "<cmd>w<cr>", desc = "Save File" }
+maps.v["<S-Up>"] = { "<Up>", desc = "Select up" }
+maps.v["<S-Down>"] = { "<Down>", desc = "Select down" }
+maps.v["<S-Left>"] = { "<Left>", desc = "Select left" }
+maps.v["<S-Right>"] = { "<Right>", desc = "Select right" }
 
 utils.set_mappings(astronvim.user_opts("mappings", maps))

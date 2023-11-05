@@ -78,16 +78,16 @@ return {
             },
           },
           {
+            type = 'pwa-node',
+            request = "launch",
             console = "integratedTerminal",
             internalConsoleOptions = "neverOpen",
             name = "ts-node-dev",
             restart = true,
-            request = "launch",
             runtimeExecutable = "tsnd",
             skipFiles = {
               "<node_internals>/**"
             },
-            type = "pwa-node",
             runtimeArgs = {"--respawn"},
             args = {"${workspaceFolder}/src/index.ts"},
             resolveSourceMapLocations = {
@@ -96,6 +96,21 @@ return {
                 "!**/node_modules/**",
             },
           }
+        },
+        {
+          name = "Current TS File",
+          type = "pwa-node",
+          request = "launch",
+          args = {"${relativeFile}"},
+          runtimeArgs ={"--nolazy", "-r", "ts-node/register"},
+          sourceMaps = true,
+          cwd = "${workspaceRoot}",
+          protocol = "inspector",
+          resolveSourceMapLocations = {
+            "${workspaceFolder}/dist/**/*.js",
+            "${workspaceFolder}/**",
+            "!**/node_modules/**",
+          },
         }
       }
 
