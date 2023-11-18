@@ -6,7 +6,6 @@ return {
       "mxsdev/nvim-dap-vscode-js",
       {
         "microsoft/vscode-js-debug",
-        version = "1.x",
         build = "npm i && npm run compile vsDebugServerBundle && mv dist out"
       }
     },
@@ -40,6 +39,25 @@ return {
       })
       require("dap").configurations = {
         typescript = {
+          {
+            type = 'pwa-node',
+            request = "launch",
+            console = "integratedTerminal",
+            internalConsoleOptions = "neverOpen",
+            name = "ts-node-dev",
+            restart = true,
+            runtimeExecutable = "tsnd",
+            skipFiles = {
+              "<node_internals>/**"
+            },
+            runtimeArgs = {"--respawn"},
+            args = {"${workspaceFolder}/src/index.ts"},
+            resolveSourceMapLocations = {
+                "${workspaceFolder}/dist/**/*.js",
+                "${workspaceFolder}/**",
+                "!**/node_modules/**",
+            },
+          },
           {
             type = "pwa-node",
             request = "launch",
@@ -77,25 +95,6 @@ return {
                 "!**/node_modules/**",
             },
           },
-          {
-            type = 'pwa-node',
-            request = "launch",
-            console = "integratedTerminal",
-            internalConsoleOptions = "neverOpen",
-            name = "ts-node-dev",
-            restart = true,
-            runtimeExecutable = "tsnd",
-            skipFiles = {
-              "<node_internals>/**"
-            },
-            runtimeArgs = {"--respawn"},
-            args = {"${workspaceFolder}/src/index.ts"},
-            resolveSourceMapLocations = {
-                "${workspaceFolder}/dist/**/*.js",
-                "${workspaceFolder}/**",
-                "!**/node_modules/**",
-            },
-          }
         },
         {
           name = "Current TS File",
@@ -280,7 +279,10 @@ return {
         dapui.open({ reset = true })
         require('neo-tree.command')._command('close')
       end
-      dap.listeners.before.event_terminated["dapui_config"] = dapui.close
+      dap.listeners.before.event_terminated["dapui_config"] = function(e)
+        require("astronvim.utils").notify "Terminating Debug session"
+        dapui.close()
+      end
       dap.listeners.before.event_exited["dapui_config"] = dapui.close
     end
   }
