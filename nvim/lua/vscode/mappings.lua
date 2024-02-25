@@ -6,9 +6,10 @@ vim.api.mapleader = " ";
 vim.notify = vscode.notify
 
 maps.n["<leader>s"] = { "<cmd>Write<cr>", desc = "Save File" }
-maps.n["<leader>e"] = { function() vscode.call("workbench.action.focusSideBar") end, desc = "Focus sidebar" }
+maps.n["<leader>e"] = { function() vscode.call("workbench.explorer.fileView.focus") end, desc = "Focus sidebar" }
 maps.n["<leader>ff"] = { function() vscode.call("workbench.action.quickOpen") end, desc = "Find Files" }
 maps.n["<leader>fw"] = { function() vscode.call("workbench.action.findInFiles") end, desc = "Grep in Files" }
+maps.n["<leader>gh"] = { function() vscode.call("git.revertChange") end, desc = "Git revert change" }
 -- Harpoon
 maps.n["<leader>hm"] = { 
   function() 
