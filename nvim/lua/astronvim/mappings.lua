@@ -23,7 +23,6 @@ local sections = {
 -- Standard Operations
 maps.n["j"] = { "v:count == 0 ? 'gj' : 'j'", expr = true, desc = "Move cursor down" }
 maps.n["k"] = { "v:count == 0 ? 'gk' : 'k'", expr = true, desc = "Move cursor up" }
-maps.n["<leader>w"] = { "<cmd>w<cr>", desc = "Save" }
 maps.n["<leader>q"] = { "<cmd>confirm q<cr>", desc = "Quit" }
 maps.n["<leader>n"] = { "<cmd>enew<cr>", desc = "New File" }
 maps.n["<C-s>"] = { "<cmd>w!<cr>", desc = "Force write" }
@@ -377,8 +376,8 @@ if is_available "nvim-dap" then
   maps.n["<leader>bq"] = { function() require("dap").close() end, desc = "Close Session" }
   maps.n["<leader>bQ"] = { function() require("dap").terminate() end, desc = "Terminate Session (S-F5)" }
   maps.n["<leader>bp"] = { function() require("dap").pause() end, desc = "Pause (F6)" }
-  maps.n["<leader>br"] = { function() require("dap").restart_frame() end, desc = "Restart (C-F5)" }
-  maps.n["<leader>bR"] = { function() require("dap").repl.toggle() end, desc = "Toggle REPL" }
+  maps.n["<leader>bR"] = { function() require("dap").restart_frame() end, desc = "Restart (C-F5)" }
+  maps.n["<leader>br"] = { function() require("dap").repl.toggle() end, desc = "Toggle REPL" }
   maps.n["<leader>bc"] = { function() require("dap").run_to_cursor() end, desc = "Run To Cursor" }
 
   if is_available "nvim-dap-ui" then
@@ -404,6 +403,12 @@ if is_available "nvim-ufo" then
   maps.n["zm"] = { function() require("ufo").closeFoldsWith() end, desc = "Fold more" }
   maps.n["zp"] = { function() require("ufo").peekFoldedLinesUnderCursor() end, desc = "Peek fold" }
 end
+
+-- Trouble
+if is_available "trouble" then
+  maps.n["<leader>ww"] = { function() require("trouble").toggle() end, desc = "Open Trouble diagnostics" }
+end
+
 
 -- Navigation between active files
 if is_available "harpoon" then
