@@ -235,6 +235,7 @@ if is_available "telescope.nvim" then
   maps.n["<leader>f"] = sections.f
   maps.n["<leader>g"] = sections.g
   maps.n["<leader>gb"] = { function() require("telescope.builtin").git_branches() end, desc = "Git branches" }
+  maps.n["<leader>fx"] = { function() require("telescope.builtin").resume() end, desc = "Resume Search" }
   maps.n["<leader>gc"] =
     { function() require("telescope.builtin").git_commits() end, desc = "Git commits (repository)" }
   maps.n["<leader>gC"] =
