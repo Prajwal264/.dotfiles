@@ -113,6 +113,15 @@ return {
         }
       }
 
+      -- Dap load launch.json when available
+      local cwd = vim.fn.expand("%:p:h")
+      if vim.fn.filereadable(cwd .. "/.vscode/launch.json") or vim.fn.filereadable(cwd .. "./launch.json") then
+        require('dap.ext.vscode').load_launchjs(nil, {    
+          ['pwa-node'] = { 'typescript' },
+          ['node'] = { 'typescript' },
+        })
+      end
+
       -- for i, ext in ipairs(exts) do
       --   require("dap").configurations[ext] = {
       --     {
