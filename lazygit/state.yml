@@ -1,10 +1,19 @@
 lastupdatecheck: 0
 recentrepos:
-- /Users/prajwal/.config
-- /Users/prajwal/.DAP/vscode-js-debug
-- /Users/prajwal/Documents/projects/work/unext/lumen/unext-react-clone
+- /Users/prajwalp/.config
+- /Users/prajwalp/Documents/projects/quiz-service
+- /Users/prajwalp/Documents/projects/course-service
+- /Users/prajwalp/Documents/projects/student-course-content-processor
+- /Users/prajwalp/Documents/projects/config-service
+- /Users/prajwalp/Documents/projects/messaging-client
+- /Users/prajwalp/Documents/projects/embedding-service
+- /Users/prajwalp/Documents/projects/evaluation-service
+- /Users/prajwalp/Documents/projects/lumen-scripts
+- /Users/prajwalp/Documents/projects/progress-service
 startuppopupversion: 5
 customcommandshistory:
+- git fetch && git checkout 4e26bbd4d4de01a2933cf3f00e20c5f104132845
+- git fetch && git checkout v7.15.2-hotfix
 - git checkout feat/astrovim
 - git fetch
 - npm run prepare
@@ -22,4 +31,8 @@ customcommandshistory:
 - git pull origin master
 - git pull origin qa
 - git config pull.rebase false
+- git pull origin index-updates
+- git fethc && git checkout 4e26bbd4d4de01a2933cf3f00e20c5f104132845
+- git fetch && git checkout vector-embeddings
 hidecommandlog: false
+ignorewhitespaceindiffview: false
