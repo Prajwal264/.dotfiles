@@ -8,7 +8,7 @@ return {
   opts = function()
     local actions = require "telescope.actions"
     local get_icon = require("astronvim.utils").get_icon
-    local trouble = require("trouble.providers.telescope")
+    local trouble = require("trouble.sources.telescope")
     return {
       defaults = {
         prompt_prefix = get_icon("Selected", 1),
@@ -28,10 +28,10 @@ return {
             ["<C-p>"] = actions.cycle_history_prev,
             ["<C-j>"] = actions.move_selection_next,
             ["<C-k>"] = actions.move_selection_previous,
-            ["<C-t>"] = trouble.open_with_trouble
+            ["<C-t>"] = trouble.open
           },
           n = {
-            ["<C-t>"] = trouble.open_with_trouble,
+            ["<C-t>"] = trouble.open,
             q = actions.close
           },
         },
