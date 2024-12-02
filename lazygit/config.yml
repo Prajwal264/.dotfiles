@@ -49,8 +49,8 @@ customCommands:
         key: 'BranchName'
         initialValue: ''
     command: "git checkout {{ .Form.BranchType }}"
-    command: "git pull origin {{ .Form.BranchType }}"
-    command: "git checkout -b {{ .Form.BranchName }}"
+    # command: "git pull origin {{ .Form.BranchType }}"
+    # command: "git checkout -b {{ .Form.BranchName }}"
     loadingText: 'Creating feature branch'
 git:
   paging:
