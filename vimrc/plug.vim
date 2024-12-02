@@ -12,6 +12,9 @@ call plug#begin('~/.vim/plugged')
   Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
   Plug 'junegunn/fzf.vim'
 
+  " Toggle Term
+  Plug 'voldikss/vim-floaterm'
+
 call plug#end()
 
 " }}}

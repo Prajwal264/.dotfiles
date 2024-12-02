@@ -40,16 +40,6 @@ nnoremap <silent> <leader>f :e %:h<CR>
 " Locate current file in NerdTREE drawer
 nnoremap <silent> <leader>l :NERDTreeFind<CR>
 
-augroup aug_nerd_tree
-  au!
-
-  " Exit vim when the only buffer remaining is NerdTree
-  autocmd BufEnter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-
-  " Automatically refresh root note, when entering NERDTree
-  autocmd BufEnter * if exists("b:NERDTree") && &ft ==# 'nerdtree' | silent NERDTreeRefreshRoot | endif
-augroup END
-
 " Toggle NERDTree and resize it to take g:NERDTreeWinSize width
 " Because NERDTree window tend to collapse when other windows enter and leave fullscreen mode
 function s:toggle_nerd_tree_drawer()

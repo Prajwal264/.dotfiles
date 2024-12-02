@@ -1,0 +1,24 @@
+{
+  "dependencies": {
+    "coc-json": ">=1.9.2",
+    "coc-pairs": ">=1.4.2",
+    "coc-css": ">=2.1.0",
+    "coc-yank": ">=1.2.3",
+    "coc-tsserver": ">=2.2.0",
+    "coc-yaml": ">=1.9.0",
+    "coc-html": ">=1.8.0",
+    "coc-snippets": ">=3.1.10",
+    "coc-lists": ">=1.5.1",
+    "coc-clangd": ">=0.31.0",
+    "coc-prettier": ">=9.3.2",
+    "coc-syntax": ">=1.2.5",
+    "coc-xml": ">=1.14.1",
+    "coc-git": ">=2.7.0",
+    "coc-marketplace": ">=1.9.0",
+    "coc-pyright": ">=1.1.385",
+    "coc-highlight": ">=2.0.4",
+    "coc-sh": ">=1.2.4"
+  },
+  "disabled": [],
+  "locked": []
+}
