@@ -6,15 +6,14 @@ map("i", "jk", "<ESC>")
 map("n", "<C-c>", "<cmd> %y+ <CR>") -- copy whole filecontent
 
 -- neo-tree mappings
-map('n', "<leader>o", "<cmd>Neotree toggle<cr>")
-map('n', "<leader>e", function()
-    if vim.bo.filetype == "neo-tree" then
-      vim.cmd.wincmd "p"
-    else
-      vim.cmd.Neotree "focus"
-    end
+map("n", "<leader>o", "<cmd>Neotree toggle<cr>")
+map("n", "<leader>e", function()
+  if vim.bo.filetype == "neo-tree" then
+    vim.cmd.wincmd "p"
+  else
+    vim.cmd.Neotree "focus"
   end
-)
+end)
 
 -- telescope
 map("n", "<leader>ff", "<cmd> Telescope find_files <CR>")
@@ -33,9 +32,19 @@ map("n", "<leader>/", "gcc", { remap = true })
 map("v", "<leader>/", "gc", { remap = true })
 
 -- format
-map("n", "<leader>fm", function()
+map("n", "<leader>lf", function()
   require("conform").format()
 end)
+
+-- harpoon
+map("n", "<leader>hh", function() require("harpoon.ui").toggle_quick_menu() end)
+map("n", "<leader>hm", function() require("harpoon.mark").add_file() end)
+map("n", "<leader>h1", function() require("harpoon.ui").nav_file(1) end)
+map("n", "<leader>h2", function() require("harpoon.ui").nav_file(2) end)
+map("n", "<leader>h3", function() require("harpoon.ui").nav_file(3) end)
+map("n", "<leader>h4", function() require("harpoon.ui").nav_file(4) end)
+
+
 
 -- Stay in indent mode
 map("v", "<S-Tab>", "<gv")
