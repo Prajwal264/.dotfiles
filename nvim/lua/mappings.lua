@@ -55,3 +55,7 @@ map("v", "<S-Up>", "<Up>")
 map("v", "<S-Down>", "<Down>")
 map("v", "<S-Left>", "<Left>")
 map("v", "<S-Right>", "<Right>")
+
+map("n", "L", function ()
+  vim.diagnostic.open_float()
+end)

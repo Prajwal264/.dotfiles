@@ -300,11 +300,10 @@ return {
    dependencies = { "nvim-tree/nvim-web-devicons" },
    config = function()
     local trouble = require("trouble");
-    trouble.setup({
-     icons = false,
-    })
+    trouble.setup({})
 
-    vim.keymap.set("n", "F", function()
+    local keymap = vim.keymap.set
+    keymap("n", "F", function()
      trouble.open()
     end)
 
