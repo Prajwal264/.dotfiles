@@ -37,19 +37,31 @@ map("n", "<leader>lf", function()
 end)
 
 -- harpoon
-map("n", "<leader>hh", function() require("harpoon.ui").toggle_quick_menu() end)
-map("n", "<leader>hm", function() require("harpoon.mark").add_file() end)
-map("n", "<leader>h1", function() require("harpoon.ui").nav_file(1) end)
-map("n", "<leader>h2", function() require("harpoon.ui").nav_file(2) end)
-map("n", "<leader>h3", function() require("harpoon.ui").nav_file(3) end)
-map("n", "<leader>h4", function() require("harpoon.ui").nav_file(4) end)
+map("n", "<leader>hh", function()
+  require("harpoon.ui").toggle_quick_menu()
+end)
+map("n", "<leader>hm", function()
+  require("harpoon.mark").add_file()
+end)
+map("n", "<leader>h1", function()
+  require("harpoon.ui").nav_file(1)
+end)
+map("n", "<leader>h2", function()
+  require("harpoon.ui").nav_file(2)
+end)
+map("n", "<leader>h3", function()
+  require("harpoon.ui").nav_file(3)
+end)
+map("n", "<leader>h4", function()
+  require("harpoon.ui").nav_file(4)
+end)
 
 -- buffers
 map("n", "[b", ":bprev<CR>")
 map("n", "]b", ":bnext<CR>")
 
 local function get_nearest_function_name()
-  local ts_utils = require("nvim-treesitter.ts_utils")
+  local ts_utils = require "nvim-treesitter.ts_utils"
   local node = ts_utils.get_node_at_cursor()
 
   while node do
@@ -60,34 +72,42 @@ local function get_nearest_function_name()
   end
 end
 
-map("n", "<leader>tf",
-  function()
-    local name = get_nearest_function_name()
-    if not name then
-      return
-    end
-
-    require("neotest").run.run({
-      extra_args = { "-run", name }
-    })
+map("n", "<leader>tf", function()
+  local name = get_nearest_function_name()
+  if not name then
+    return
   end
-)
+
+  require("neotest").run.run {
+    extra_args = { "-run", name },
+  }
+end)
 
 -- neo tests
-map('n', '<leader>tn', ':lua require("neotest").run.run()<CR>')
-map('n', '<leader>tl', ':lua require("neotest").run.run_last()<CR>')
-map('n', '<leader>to', ':lua require("neotest").output.open({ enter = true })<CR>')
+map("n", "<leader>tn", ':lua require("neotest").run.run()<CR>')
+map("n", "<leader>tl", ':lua require("neotest").run.run_last()<CR>')
+map("n", "<leader>to", ':lua require("neotest").output.open({ enter = true })<CR>')
 
 -- Stay in indent mode
 map("v", "<S-Tab>", "<gv")
 map("v", "<Tab>", ">gv")
 
 -- git signs
-map("n", "]g", function() require("gitsigns").next_hunk() end)
-map("n", "[g", function() require("gitsigns").prev_hunk() end)
-map("n", "<leader>gl", function() require("gitsigns").blame_line() end)
-map("n", "<leader>gh", function() require("gitsigns").reset_hunk() end)
-map("n", "<leader>gs", function() require("gitsigns").stage_hunk() end)
+map("n", "]g", function()
+  require("gitsigns").next_hunk()
+end)
+map("n", "[g", function()
+  require("gitsigns").prev_hunk()
+end)
+map("n", "<leader>gl", function()
+  require("gitsigns").blame_line()
+end)
+map("n", "<leader>gh", function()
+  require("gitsigns").reset_hunk()
+end)
+map("n", "<leader>gs", function()
+  require("gitsigns").stage_hunk()
+end)
 
 map("n", "<leader>s", "<cmd>w<cr>")
 map("v", "<S-Up>", "<Up>")
@@ -95,6 +115,19 @@ map("v", "<S-Down>", "<Down>")
 map("v", "<S-Left>", "<Left>")
 map("v", "<S-Right>", "<Right>")
 
-map("n", "L", function ()
+map("n", "L", function()
   vim.diagnostic.open_float()
 end)
+
+-- dap
+map("n", "<leader>bb", require("dap").toggle_breakpoint)
+map("n", "<leader>bs", require("dap").continue)
+map("n", "<leader>bB", require("dap").clear_breakpoints)
+map("n", "<leader>bC", function()
+  vim.ui.input({ prompt = "Condition: " }, function(condition)
+    if condition then
+      require("dap").set_breakpoint(condition)
+    end
+  end)
+end)
+map("n", "<leader>du", function() require("dapui").toggle() end)
