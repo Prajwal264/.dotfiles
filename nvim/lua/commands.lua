@@ -23,3 +23,12 @@ autocmd("BufEnter", {
   end,
 })
 
+autocmd("BufWritePre", {
+  desc = "Format Go file on save",
+  pattern = "*.go",
+  group = augroup("GoFormat", {}),
+  callback = function()
+   require('go.format').goimports()
+  end,
+})
+

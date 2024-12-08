@@ -44,11 +44,25 @@ map("n", "<leader>h2", function() require("harpoon.ui").nav_file(2) end)
 map("n", "<leader>h3", function() require("harpoon.ui").nav_file(3) end)
 map("n", "<leader>h4", function() require("harpoon.ui").nav_file(4) end)
 
+-- buffers
+map("n", "[b", ":bprev<CR>")
+map("n", "]b", ":bnext<CR>")
 
+-- neo tests
+map('n', '<leader>tn', ':lua require("neotest").run.run()<CR>')
+map('n', '<leader>tl', ':lua require("neotest").run.run_last()<CR>')
+map('n', '<leader>to', ':lua require("neotest").output.open({ enter = true })<CR>')
 
 -- Stay in indent mode
 map("v", "<S-Tab>", "<gv")
 map("v", "<Tab>", ">gv")
+
+-- git signs
+map("n", "]g", function() require("gitsigns").next_hunk() end)
+map("n", "[g", function() require("gitsigns").prev_hunk() end)
+map("n", "<leader>gl", function() require("gitsigns").blame_line() end)
+map("n", "<leader>gh", function() require("gitsigns").reset_hunk() end)
+map("n", "<leader>gs", function() require("gitsigns").stage_hunk() end)
 
 map("n", "<leader>s", "<cmd>w<cr>")
 map("v", "<S-Up>", "<Up>")

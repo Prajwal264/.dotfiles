@@ -10,7 +10,9 @@ return {
     "nvim-neo-tree/neo-tree.nvim",
     dependencies = { "MunifTanjim/nui.nvim" },
     cmd = "Neotree",
-    init = function() vim.g.neo_tree_remove_legacy_commands = true end,
+    init = function()
+      vim.g.neo_tree_remove_legacy_commands = true
+    end,
     opts = function()
       return {
         auto_clean_after_session_restore = true,
@@ -112,7 +114,7 @@ return {
         },
         filesystem = {
           follow_current_file = {
-            enabled = true
+            enabled = true,
           },
           hijack_netrw_behavior = "open_current",
           use_libuv_file_watcher = true,
@@ -121,12 +123,14 @@ return {
             hide_dotfiles = true,
             hide_gitignored = true,
             hide_hidden = true, -- only works on Windows for hidden files/directories
-          }
+          },
         },
         event_handlers = {
           {
             event = "neo_tree_buffer_enter",
-            handler = function(_) vim.opt_local.signcolumn = "auto" end,
+            handler = function(_)
+              vim.opt_local.signcolumn = "auto"
+            end,
           },
         },
       }
@@ -258,7 +262,7 @@ return {
     lazy = false,
     opts = { silent = true },
     config = function()
-      require('toggleterm').setup {
+      require("toggleterm").setup {
         size = 120,
         open_mapping = [[<c-\>]],
         hide_numbers = true,
@@ -275,47 +279,47 @@ return {
           border = "curved",
           winblend = 0,
           highlights = {
-              border = "Normal",
-              background = "Normal",
+            border = "Normal",
+            background = "Normal",
           },
         },
       }
       local keymap = vim.keymap.set
       local s_opts = { silent = true }
       keymap("t", "<esc>", [[<C-\><C-n>]], s_opts)
-    end
-  },
-  {
-    'ThePrimeagen/harpoon',
-    dependencies = {
-      'nvim-lua/plenary.nvim'
-    },
-    config = function ()
-      require("harpoon").setup()
-      require("telescope").load_extension('harpoon')
     end,
   },
   {
-   "folke/trouble.nvim",
-   dependencies = { "nvim-tree/nvim-web-devicons" },
-   config = function()
-    local trouble = require("trouble");
-    trouble.setup({})
+    "ThePrimeagen/harpoon",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+    },
+    config = function()
+      require("harpoon").setup()
+      require("telescope").load_extension "harpoon"
+    end,
+  },
+  {
+    "folke/trouble.nvim",
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+    config = function()
+      local trouble = require "trouble"
+      trouble.setup {}
 
-    local keymap = vim.keymap.set
-    keymap("n", "F", function()
-     trouble.open()
-    end)
+      local keymap = vim.keymap.set
+      keymap("n", "F", function()
+        trouble.open()
+      end)
 
-    -- vim.keymap.set("n", "[t", function()
-    --  require("trouble").next({skip_groups = true, jump = true});
-    -- end)
-    --
-    -- vim.keymap.set("n", "]t", function()
-    --     require("trouble").previous({skip_groups = true, jump = true});
-    -- end)
-    --
-   end
+      -- vim.keymap.set("n", "[t", function()
+      --  require("trouble").next({skip_groups = true, jump = true});
+      -- end)
+      --
+      -- vim.keymap.set("n", "]t", function()
+      --     require("trouble").previous({skip_groups = true, jump = true});
+      -- end)
+      --
+    end,
   },
   {
     "kdheepak/lazygit.nvim",
@@ -327,14 +331,14 @@ return {
           local cmd = [[lua require"lazygit".lazygit(nil)]]
           vim.api.nvim_command(cmd)
 
-          vim.cmd('stopinsert')
-          vim.cmd([[execute "normal i"]])
-          vim.fn.feedkeys('j')
-          vim.api.nvim_buf_set_keymap(0, 't', '<Esc>', '<Esc>', {noremap = true, silent = true})
+          vim.cmd "stopinsert"
+          vim.cmd [[execute "normal i"]]
+          vim.fn.feedkeys "j"
+          vim.api.nvim_buf_set_keymap(0, "t", "<Esc>", "<Esc>", { noremap = true, silent = true })
         end,
         silent = true,
         desc = "LazyGit",
-        mode = "n"
+        mode = "n",
       },
     },
   },
@@ -343,9 +347,69 @@ return {
     version = "*", -- Use for stability; omit to use `main` branch for the latest features
     event = "VeryLazy",
     config = function()
-      require("nvim-surround").setup({
-          -- Configuration here, or leave empty to use defaults
+      require("nvim-surround").setup {
+        -- Configuration here, or leave empty to use defaults
+      }
+    end,
+  },
+  {
+    "nvim-neotest/neotest",
+    dependencies = {
+      "nvim-neotest/neotest-go",
+      "nvim-neotest/neotest",
+      "nvim-neo/nvim-nio",
+      -- Your other test adapters here
+    },
+    config = function()
+      -- get neotest namespace (api call creates or returns namespace)
+      local neotest_ns = vim.api.nvim_create_namespace("neotest")
+      vim.diagnostic.config({
+        virtual_text = {
+          format = function(diagnostic)
+            local message =
+              diagnostic.message:gsub("\n", " "):gsub("\t", " "):gsub("%s+", " "):gsub("^%s+", "")
+            return message
+          end,
+        },
+      }, neotest_ns)
+      require("neotest").setup({
+        -- your neotest config here
+        adapters = {
+          require("neotest-go"),
+        },
       })
-    end
-  }
+    end,
+  },
+  {
+    "ray-x/go.nvim",
+    dependencies = {  -- optional packages
+      "ray-x/guihua.lua",
+      "neovim/nvim-lspconfig",
+      "nvim-treesitter/nvim-treesitter",
+      "jose-elias-alvarez/null-ls.nvim"
+    },
+    config = function()
+      require("go").setup()
+      local null_ls = require("null-ls")
+      local sources = {
+        null_ls.builtins.diagnostics.revive,
+        null_ls.builtins.formatting.golines.with({
+          extra_args = {
+            "--max-len=180",
+            "--base-formatter=gofumpt",
+          },
+        })
+      }
+      local gotest = require("go.null_ls").gotest()
+      local gotest_codeaction = require("go.null_ls").gotest_action()
+      local golangci_lint = require("go.null_ls").golangci_lint()
+      table.insert(sources, gotest)
+      table.insert(sources, golangci_lint)
+      table.insert(sources, gotest_codeaction)
+      null_ls.setup({ sources = sources, debounce = 1000, default_timeout = 5000 })
+    end,
+    event = {"CmdlineEnter"},
+    ft = {"go", 'gomod'},
+    build = ':lua require("go.install").update_all_sync()' -- if you need to install/update all binaries
+  },
 }
