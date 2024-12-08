@@ -48,6 +48,31 @@ map("n", "<leader>h4", function() require("harpoon.ui").nav_file(4) end)
 map("n", "[b", ":bprev<CR>")
 map("n", "]b", ":bnext<CR>")
 
+local function get_nearest_function_name()
+  local ts_utils = require("nvim-treesitter.ts_utils")
+  local node = ts_utils.get_node_at_cursor()
+
+  while node do
+    if node:type() == "function_declaration" then
+      return ts_utils.get_node_text(node:child(1))[1]
+    end
+    node = node:parent()
+  end
+end
+
+map("n", "<leader>tf",
+  function()
+    local name = get_nearest_function_name()
+    if not name then
+      return
+    end
+
+    require("neotest").run.run({
+      extra_args = { "-run", name }
+    })
+  end
+)
+
 -- neo tests
 map('n', '<leader>tn', ':lua require("neotest").run.run()<CR>')
 map('n', '<leader>tl', ':lua require("neotest").run.run_last()<CR>')

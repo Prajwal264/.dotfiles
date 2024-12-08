@@ -354,31 +354,23 @@ return {
   },
   {
     "nvim-neotest/neotest",
+    -- dev = true,
     dependencies = {
-      "nvim-neotest/neotest-go",
-      "nvim-neotest/neotest",
-      "nvim-neo/nvim-nio",
-      -- Your other test adapters here
+        "nvim-lua/plenary.nvim",
+        "nvim-treesitter/nvim-treesitter",
+        "antoinemadec/FixCursorHold.nvim",
+        { "nvim-neotest/neotest-plenary" },
+        "nvim-neotest/neotest-go",
+        "nvim-neotest/nvim-nio",
     },
     config = function()
-      -- get neotest namespace (api call creates or returns namespace)
-      local neotest_ns = vim.api.nvim_create_namespace("neotest")
-      vim.diagnostic.config({
-        virtual_text = {
-          format = function(diagnostic)
-            local message =
-              diagnostic.message:gsub("\n", " "):gsub("\t", " "):gsub("%s+", " "):gsub("^%s+", "")
-            return message
-          end,
-        },
-      }, neotest_ns)
-      require("neotest").setup({
-        -- your neotest config here
-        adapters = {
-          require("neotest-go"),
-        },
-      })
-    end,
+        require("neotest").setup({
+            log_level = vim.log.levels.TRACE,
+            adapters = {
+                require("neotest-go"),
+            }
+        })
+    end
   },
   {
     "ray-x/go.nvim",
@@ -386,27 +378,9 @@ return {
       "ray-x/guihua.lua",
       "neovim/nvim-lspconfig",
       "nvim-treesitter/nvim-treesitter",
-      "jose-elias-alvarez/null-ls.nvim"
     },
     config = function()
       require("go").setup()
-      local null_ls = require("null-ls")
-      local sources = {
-        null_ls.builtins.diagnostics.revive,
-        null_ls.builtins.formatting.golines.with({
-          extra_args = {
-            "--max-len=180",
-            "--base-formatter=gofumpt",
-          },
-        })
-      }
-      local gotest = require("go.null_ls").gotest()
-      local gotest_codeaction = require("go.null_ls").gotest_action()
-      local golangci_lint = require("go.null_ls").golangci_lint()
-      table.insert(sources, gotest)
-      table.insert(sources, golangci_lint)
-      table.insert(sources, gotest_codeaction)
-      null_ls.setup({ sources = sources, debounce = 1000, default_timeout = 5000 })
     end,
     event = {"CmdlineEnter"},
     ft = {"go", 'gomod'},
