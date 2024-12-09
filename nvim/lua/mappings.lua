@@ -120,14 +120,23 @@ map("n", "L", function()
 end)
 
 -- dap
-map("n", "<leader>bb", require("dap").toggle_breakpoint)
-map("n", "<leader>bs", require("dap").continue)
-map("n", "<leader>bB", require("dap").clear_breakpoints)
-map("n", "<leader>bC", function()
-  vim.ui.input({ prompt = "Condition: " }, function(condition)
-    if condition then
-      require("dap").set_breakpoint(condition)
-    end
-  end)
-end)
-map("n", "<leader>du", function() require("dapui").toggle() end)
+map("n", "<leader>bb", ':lua require("dap").toggle_breakpoint()<CR>')
+map("n", "<leader>bs", ':lua require("dap").continue()<CR>')
+map("n", "<leader>bB", ':lua require("dap").clear_breakpoints()<CR>')
+map("n", "<leader>E",
+  function()
+    vim.ui.input({ prompt = "Expression: " }, function(expr)
+      if expr then require("dapui").eval(expr) end
+    end)
+  end
+)
+map("v", "E", ':lua require("dapui").eval()<CR>')
+map("n", "H", ':lua require("dap.ui.widgets").hover()<CR>')
+-- map("n", "<leader>bC", function()
+--   vim.ui.input({ prompt = "Condition: " }, function(condition)
+--     if condition then
+--       require("dap").set_breakpoint(condition)
+--     end
+--   end)
+-- end)
+map("n", "<leader>du", ':lua require("dapui").toggle()<CR>')

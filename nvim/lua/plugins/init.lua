@@ -393,63 +393,36 @@ return {
       "mfussenegger/nvim-dap",
     },
     opts = {
-      automatic_installation = { exclude = { "delve" } },
+      automatic_installation = { "delve" },
       handlers = {
         function(config)
-          -- all sources with no handler get passed here
-          -- Keep original functionality
-          require("mason-nvim-dap").default_setup(config)
-        end,
-        -- golang
-        delve = function(config)
-          config.configurations = {
-            {
-              name = "Delve: Debug",
-              type = "delve",
-              request = "launch",
-              program = "${file}",
-              cwd = "${workspaceFolder}",
-            },
-            {
-              name = "Delve: Debug with Arguments",
-              type = "delve",
-              request = "launch",
-              args = function()
-                local args_string = vim.fn.input("Input arguments: ")
-                return vim.split(args_string, " ")
-              end,
-              program = "${file}",
-              cwd = "${workspaceFolder}",
-            },
-            {
-              type = "delve",
-              name = "Delve: Debug Package",
-              request = "launch",
-              program = "${fileDirname}",
-            },
-            {
-              type = "delve",
-              name = "Delve: Attach",
-              mode = "local",
-              request = "attach",
-              processId = require("dap.utils").pick_process,
-            },
-            {
-              type = "delve",
-              name = "Delve: Debug test",
-              request = "launch",
-              mode = "test",
-              program = "${file}",
-            },
-            {
-              type = "delve",
-              name = "Delve: Debug test (go.mod)",
-              request = "launch",
-              mode = "test",
-              program = "./${relativeFileDirname}",
-            },
-          }
-          require("mason-nvim-dap").default_setup(config)
+          require("dap").adapters.go = function(callback, _config)
+            if _config.mode == 'remote' and _config.request == 'attach' then
+                callback({
+                    type = 'server',
+                    host = config.host or '127.0.0.1',
+                    port = config.port or '38697'
+                })
+            else
+                callback({
+                    type = 'server',
+                    port = '${port}',
+                    executable = {
+                        command = 'dlv',
+                        args = { 'dap', '-l', '127.0.0.1:${port}', '--log', '--log-output=dap' },
+                        detached = vim.fn.has("win32") == 0,
+                    }
+                })
+            end
+            require("dap").configurations.go = {
+              {
+                type = "delve",
+                name = "Main Debug",
+                request = "launch",
+                program = "${workspaceFolder}/cmd/api/main.go"
+              },
+            }
+          end
         end,
       },
     },
@@ -457,7 +430,7 @@ return {
   {
     "rcarriga/nvim-dap-ui",
     event = "VeryLazy",
-    dependencies = "mfussenegger/nvim-dap",
+    dependencies = {"mfussenegger/nvim-dap"},
     config = function()
       local dap = require("dap")
       local dapui = require("dapui")
