@@ -543,12 +543,14 @@ return {
     dependencies = {
       "williamboman/mason.nvim",
       "mfussenegger/nvim-dap",
+      "mxsdev/nvim-dap-vscode-js",
     },
     opts = {
       automatic_installation = { "delve" },
       handlers = {
         function(config)
-          require("dap").adapters.go = function(callback, _config)
+          local dap = require("dap")
+          dap.adapters.go = function(callback, _config)
             if _config.mode == "remote" and _config.request == "attach" then
               callback {
                 type = "server",
@@ -566,15 +568,96 @@ return {
                 },
               }
             end
-            require("dap").configurations.go = {
+          end
+          -- JS
+          require('dap-vscode-js').setup({
+            node_path = 'ts-node',
+            debugger_path = os.getenv('HOME') .. '/.DAP/vscode-js-debug',
+            adapters = { 'pwa-node', 'pwa-chrome', 'pwa-msedge', 'node-terminal', 'pwa-extensionHost' },
+          })
+          require("dap").configurations = {
+            go = {
               {
                 type = "delve",
                 name = "Main Debug",
                 request = "launch",
                 program = "${workspaceFolder}/cmd/api/main.go",
               },
+            },
+            typescript = {
+              {
+                type = 'pwa-node',
+                request = "launch",
+                console = "integratedTerminal",
+                internalConsoleOptions = "neverOpen",
+                name = "ts-node-dev",
+                restart = true,
+                runtimeExecutable = "tsnd",
+                skipFiles = {
+                  "<node_internals>/**"
+                },
+                runtimeArgs = {"--respawn"},
+                args = {"${workspaceFolder}/src/index.ts"},
+                resolveSourceMapLocations = {
+                    "${workspaceFolder}/dist/**/*.js",
+                    "${workspaceFolder}/**",
+                    "!**/node_modules/**",
+                },
+              },
+              {
+                type = "pwa-node",
+                request = "launch",
+                name = "Launch file",
+                program = "${file}",
+                cwd = "${workspaceFolder}",
+                sourceMaps = true,
+                protocol = "inspector",
+                console = "integratedTerminal",
+                outFiles = { "${workspaceFolder}/dist/**/*.js" },
+                runtimeExecutable = "ts-node",
+                skipFiles = { "<node_internals>/**", "node_modules/**" },
+                resolveSourceMapLocations = {
+                    "${workspaceFolder}/dist/**/*.js",
+                    "${workspaceFolder}/**",
+                    "!**/node_modules/**",
+                },
+              },
+              {
+                type = "pwa-node",
+                request = "launch",
+                name = "Launch microservices",
+                program = "${file}",
+                arg = { '--exec','ts-node', '-r', 'dotenv/config', './src/index.ts' },
+                cwd = "${workspaceFolder}",
+                sourceMaps = true,
+                protocol = "inspector",
+                console = "integratedTerminal",
+                outFiles = { "${workspaceFolder}/dist/**/*.js" },
+                runtimeExecutable = "nodemon",
+                skipFiles = { "<node_internals>/**", "node_modules/**" },
+                resolveSourceMapLocations = {
+                    "${workspaceFolder}/dist/**/*.js",
+                    "${workspaceFolder}/**",
+                    "!**/node_modules/**",
+                },
+              },
+            },
+            {
+              name = "Current TS File",
+              type = "pwa-node",
+              request = "launch",
+              args = {"${relativeFile}"},
+              runtimeArgs ={"--nolazy", "-r", "ts-node/register"},
+              sourceMaps = true,
+              cwd = "${workspaceRoot}",
+              protocol = "inspector",
+              resolveSourceMapLocations = {
+                "${workspaceFolder}/dist/**/*.js",
+                "${workspaceFolder}/**",
+                "!**/node_modules/**",
+              },
             }
-          end
+          }
         end,
       },
     },
