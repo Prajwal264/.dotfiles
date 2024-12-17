@@ -396,7 +396,7 @@ return {
       automatic_installation = { "delve" },
       handlers = {
         function(config)
-          require("dap").adapters.go = function(callback, _config)
+          require("dap").adapters.delve = function(callback, _config)
             if _config.mode == 'remote' and _config.request == 'attach' then
                 callback({
                     type = 'server',
@@ -414,7 +414,7 @@ return {
                     }
                 })
             end
-            require("dap").configurations.go = {
+            require("dap").configurations.delve = {
               {
                 type = "delve",
                 name = "Main Debug",

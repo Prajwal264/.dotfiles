@@ -132,11 +132,11 @@ map("n", "<leader>E",
 )
 map("v", "E", ':lua require("dapui").eval()<CR>')
 map("n", "H", ':lua require("dap.ui.widgets").hover()<CR>')
--- map("n", "<leader>bC", function()
---   vim.ui.input({ prompt = "Condition: " }, function(condition)
---     if condition then
---       require("dap").set_breakpoint(condition)
---     end
---   end)
--- end)
+map("n", "<leader>bC", function()
+  vim.ui.input({ prompt = "Condition: " }, function(condition)
+    if condition then
+      require("dap").set_breakpoint(condition)
+    end
+  end)
+end)
 map("n", "<leader>du", ':lua require("dapui").toggle()<CR>')
