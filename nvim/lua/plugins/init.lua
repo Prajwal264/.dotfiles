@@ -256,7 +256,6 @@ return {
     event = { "BufReadPre", "BufNewFile" },
     opts = {},
   },
-
   {
     "akinsho/toggleterm.nvim",
     lazy = false,
@@ -322,6 +321,159 @@ return {
     end,
   },
   {
+    "folke/snacks.nvim",
+    priority = 1000,
+    lazy = false,
+    ---@type snacks.Config
+    opts = {
+      -- bigfile = { enabled = true },
+      -- dashboard = { enabled = true },
+      -- indent = { enabled = true },
+      -- input = { enabled = true },
+      notifier = {
+        enabled = true,
+        timeout = 3000,
+      },
+      -- quickfile = { enabled = true },
+      -- statuscolumn = { enabled = true },
+      -- words = { enabled = true },
+      -- lazygit = {
+      --   -- automatically configure lazygit to use the current colorscheme
+      --   -- and integrate edit with the current neovim instance
+      --   configure = true,
+      --   -- extra configuration for lazygit that will be merged with the default
+      --   -- snacks does NOT have a full yaml parser, so if you need `"test"` to appear with the quotes
+      --   -- you need to double quote it: `"\"test\""`
+      --   config = {
+      --     os = { editPreset = "nvim-remote" },
+      --     gui = {
+      --       -- set to an empty string "" to disable icons
+      --       nerdFontsVersion = "3",
+      --     },
+      --   },
+      --   theme_path = vim.fs.normalize("~/.config/lazygit/colors.yml"),
+      --   -- Theme for lazygit
+      --   -- theme = {
+      --   --   [241] = { fg = "Special" },
+      --   --   activeBorderColor = { fg = "MatchParen", bold = true },
+      --   --   cherryPickedCommitBgColor = { fg = "Identifier" },
+      --   --   cherryPickedCommitFgColor = { fg = "Function" },
+      --   --   defaultFgColor = { fg = "Normal" },
+      --   --   inactiveBorderColor = { fg = "FloatBorder" },
+      --   --   optionsTextColor = { fg = "Function" },
+      --   --   searchingActiveBorderColor = { fg = "MatchParen", bold = true },
+      --   --   selectedLineBgColor = { bg = "Visual" }, -- set to `default` to have no background colour
+      --   --   unstagedChangesColor = { fg = "DiagnosticError" },
+      --   -- },
+      --   win = {
+      --     style = "lazygit",
+      --   },
+      -- },
+      styles = {
+        notification = {
+          -- wo = { wrap = true } -- Wrap notifications
+        },
+      },
+    },
+    keys = {
+      {
+        "<leader>gB",
+        function()
+          Snacks.gitbrowse()
+        end,
+        desc = "Git Browse",
+      },
+      {
+        "<leader>gb",
+        function()
+          Snacks.git.blame_line()
+        end,
+        desc = "Git Blame Line",
+      },
+      {
+        "<leader>gf",
+        function()
+          Snacks.lazygit.log_file()
+        end,
+        desc = "Lazygit Current File History",
+      },
+      -- {
+      --   "<leader>gg",
+      --   function()
+      --     Snacks.lazygit()
+      --   end,
+      --   desc = "Lazygit",
+      -- },
+      {
+        "<leader>gl",
+        function()
+          Snacks.lazygit.log()
+        end,
+        desc = "Lazygit Log (cwd)",
+      },
+      {
+        "<leader>un",
+        function()
+          Snacks.notifier.hide()
+        end,
+        desc = "Dismiss All Notifications",
+      },
+      -- {
+      --   "<c-\\>",
+      --   function()
+      --     Snacks.terminal()
+      --   end,
+      --   desc = "Toggle Terminal",
+      -- },
+      {
+        "]]",
+        function()
+          Snacks.words.jump(vim.v.count1)
+        end,
+        desc = "Next Reference",
+        mode = { "n", "t" },
+      },
+      {
+        "[[",
+        function()
+          Snacks.words.jump(-vim.v.count1)
+        end,
+        desc = "Prev Reference",
+        mode = { "n", "t" },
+      },
+    },
+    init = function()
+      vim.api.nvim_create_autocmd("User", {
+        pattern = "VeryLazy",
+        callback = function()
+          -- Setup some globals for debugging (lazy-loaded)
+          _G.dd = function(...)
+            Snacks.debug.inspect(...)
+          end
+          _G.bt = function()
+            Snacks.debug.backtrace()
+          end
+          vim.print = _G.dd -- Override print to use snacks for `:=` command
+
+          -- Create some toggle mappings
+          Snacks.toggle.option("spell", { name = "Spelling" }):map "<leader>us"
+          Snacks.toggle.option("wrap", { name = "Wrap" }):map "<leader>uw"
+          Snacks.toggle.option("relativenumber", { name = "Relative Number" }):map "<leader>uL"
+          Snacks.toggle.diagnostics():map "<leader>ud"
+          Snacks.toggle.line_number():map "<leader>ul"
+          Snacks.toggle
+            .option("conceallevel", { off = 0, on = vim.o.conceallevel > 0 and vim.o.conceallevel or 2 })
+            :map "<leader>uc"
+          Snacks.toggle.treesitter():map "<leader>uT"
+          Snacks.toggle.option("background", { off = "light", on = "dark", name = "Dark Background" }):map "<leader>ub"
+          Snacks.toggle.inlay_hints():map "<leader>uh"
+          Snacks.toggle.indent():map "<leader>ug"
+          Snacks.toggle.dim():map "<leader>uD"
+        end,
+      })
+    end,
+  },
+  {
     "kdheepak/lazygit.nvim",
     cmd = { "LazyGit", "LazyGitConfig" },
     keys = {
@@ -356,25 +508,25 @@ return {
     "nvim-neotest/neotest",
     -- dev = true,
     dependencies = {
-        "nvim-lua/plenary.nvim",
-        "nvim-treesitter/nvim-treesitter",
-        "antoinemadec/FixCursorHold.nvim",
-        { "nvim-neotest/neotest-plenary" },
-        "nvim-neotest/neotest-go",
-        "nvim-neotest/nvim-nio",
+      "nvim-lua/plenary.nvim",
+      "nvim-treesitter/nvim-treesitter",
+      "antoinemadec/FixCursorHold.nvim",
+      { "nvim-neotest/neotest-plenary" },
+      "nvim-neotest/neotest-go",
+      "nvim-neotest/nvim-nio",
     },
     config = function()
-        require("neotest").setup({
-            log_level = vim.log.levels.TRACE,
-            adapters = {
-                require("neotest-go"),
-            }
-        })
-    end
+      require("neotest").setup {
+        log_level = vim.log.levels.TRACE,
+        adapters = {
+          require "neotest-go",
+        },
+      }
+    end,
   },
   {
     "ray-x/go.nvim",
-    dependencies = {  -- optional packages
+    dependencies = { -- optional packages
       "ray-x/guihua.lua",
       "neovim/nvim-lspconfig",
       "nvim-treesitter/nvim-treesitter",
@@ -382,47 +534,130 @@ return {
     config = function()
       require("go").setup()
     end,
-    event = {"CmdlineEnter"},
-    ft = {"go", 'gomod'},
-    build = ':lua require("go.install").update_all_sync()' -- if you need to install/update all binaries
+    event = { "CmdlineEnter" },
+    ft = { "go", "gomod" },
+    build = ':lua require("go.install").update_all_sync()', -- if you need to install/update all binaries
   },
   {
     "jay-babu/mason-nvim-dap.nvim",
     dependencies = {
       "williamboman/mason.nvim",
       "mfussenegger/nvim-dap",
+      "mxsdev/nvim-dap-vscode-js",
     },
     opts = {
       automatic_installation = { "delve" },
       handlers = {
         function(config)
-          require("dap").adapters.delve = function(callback, _config)
-            if _config.mode == 'remote' and _config.request == 'attach' then
-                callback({
-                    type = 'server',
-                    host = config.host or '127.0.0.1',
-                    port = config.port or '38697'
-                })
+          local dap = require("dap")
+          dap.adapters.go = function(callback, _config)
+            if _config.mode == "remote" and _config.request == "attach" then
+              callback {
+                type = "server",
+                host = config.host or "127.0.0.1",
+                port = config.port or "38697",
+              }
             else
-                callback({
-                    type = 'server',
-                    port = '${port}',
-                    executable = {
-                        command = 'dlv',
-                        args = { 'dap', '-l', '127.0.0.1:${port}', '--log', '--log-output=dap' },
-                        detached = vim.fn.has("win32") == 0,
-                    }
-                })
+              callback {
+                type = "server",
+                port = "${port}",
+                executable = {
+                  command = "dlv",
+                  args = { "dap", "-l", "127.0.0.1:${port}", "--log", "--log-output=dap" },
+                  detached = vim.fn.has "win32" == 0,
+                },
+              }
             end
-            require("dap").configurations.delve = {
+          end
+          -- JS
+          require('dap-vscode-js').setup({
+            node_path = 'ts-node',
+            debugger_path = os.getenv('HOME') .. '/.DAP/vscode-js-debug',
+            adapters = { 'pwa-node', 'pwa-chrome', 'pwa-msedge', 'node-terminal', 'pwa-extensionHost' },
+          })
+          require("dap").configurations = {
+            go = {
               {
                 type = "delve",
                 name = "Main Debug",
                 request = "launch",
-                program = "${workspaceFolder}/cmd/api/main.go"
+                program = "${workspaceFolder}/cmd/api/main.go",
+              },
+            },
+            typescript = {
+              {
+                type = 'pwa-node',
+                request = "launch",
+                console = "integratedTerminal",
+                internalConsoleOptions = "neverOpen",
+                name = "ts-node-dev",
+                restart = true,
+                runtimeExecutable = "tsnd",
+                skipFiles = {
+                  "<node_internals>/**"
+                },
+                runtimeArgs = {"--respawn"},
+                args = {"${workspaceFolder}/src/index.ts"},
+                resolveSourceMapLocations = {
+                    "${workspaceFolder}/dist/**/*.js",
+                    "${workspaceFolder}/**",
+                    "!**/node_modules/**",
+                },
+              },
+              {
+                type = "pwa-node",
+                request = "launch",
+                name = "Launch file",
+                program = "${file}",
+                cwd = "${workspaceFolder}",
+                sourceMaps = true,
+                protocol = "inspector",
+                console = "integratedTerminal",
+                outFiles = { "${workspaceFolder}/dist/**/*.js" },
+                runtimeExecutable = "ts-node",
+                skipFiles = { "<node_internals>/**", "node_modules/**" },
+                resolveSourceMapLocations = {
+                    "${workspaceFolder}/dist/**/*.js",
+                    "${workspaceFolder}/**",
+                    "!**/node_modules/**",
+                },
+              },
+              {
+                type = "pwa-node",
+                request = "launch",
+                name = "Launch microservices",
+                program = "${file}",
+                arg = { '--exec','ts-node', '-r', 'dotenv/config', './src/index.ts' },
+                cwd = "${workspaceFolder}",
+                sourceMaps = true,
+                protocol = "inspector",
+                console = "integratedTerminal",
+                outFiles = { "${workspaceFolder}/dist/**/*.js" },
+                runtimeExecutable = "nodemon",
+                skipFiles = { "<node_internals>/**", "node_modules/**" },
+                resolveSourceMapLocations = {
+                    "${workspaceFolder}/dist/**/*.js",
+                    "${workspaceFolder}/**",
+                    "!**/node_modules/**",
+                },
+              },
+            },
+            {
+              name = "Current TS File",
+              type = "pwa-node",
+              request = "launch",
+              args = {"${relativeFile}"},
+              runtimeArgs ={"--nolazy", "-r", "ts-node/register"},
+              sourceMaps = true,
+              cwd = "${workspaceRoot}",
+              protocol = "inspector",
+              resolveSourceMapLocations = {
+                "${workspaceFolder}/dist/**/*.js",
+                "${workspaceFolder}/**",
+                "!**/node_modules/**",
               },
             }
-          end
+          }
         end,
       },
     },
@@ -430,10 +665,10 @@ return {
   {
     "rcarriga/nvim-dap-ui",
     event = "VeryLazy",
-    dependencies = {"mfussenegger/nvim-dap"},
+    dependencies = { "mfussenegger/nvim-dap" },
     config = function()
-      local dap = require("dap")
-      local dapui = require("dapui")
+      local dap = require "dap"
+      local dapui = require "dapui"
       dapui.setup()
       dap.listeners.after.event_initialized["dapui_config"] = function()
         dapui.open()
@@ -444,6 +679,6 @@ return {
       dap.listeners.before.event_exited["dapui_config"] = function()
         dapui.close()
       end
-    end
+    end,
   },
 }
