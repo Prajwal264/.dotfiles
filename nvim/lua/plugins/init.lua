@@ -315,7 +315,7 @@ return {
       -- end)
       --
       -- vim.keymap.set("n", "]t", function()
-      --     require("trouble").previous({skip_groups = true, jump = true});
+      --     require("trouble").previous({skip_groups = true, jump = true}):
       -- end)
       --
     end,
@@ -496,7 +496,7 @@ return {
   },
   {
     "kylechui/nvim-surround",
-    version = "*", -- Use for stability; omit to use `main` branch for the latest features
+    version = "*", -- Use for stability: omit to use `main` branch for the latest features
     event = "VeryLazy",
     config = function()
       require("nvim-surround").setup {
@@ -544,31 +544,14 @@ return {
       "williamboman/mason.nvim",
       "mfussenegger/nvim-dap",
       "mxsdev/nvim-dap-vscode-js",
+      "leoluz/nvim-dap-go"
     },
     opts = {
       automatic_installation = { "delve" },
       handlers = {
         function(config)
-          local dap = require("dap")
-          dap.adapters.go = function(callback, _config)
-            if _config.mode == "remote" and _config.request == "attach" then
-              callback {
-                type = "server",
-                host = config.host or "127.0.0.1",
-                port = config.port or "38697",
-              }
-            else
-              callback {
-                type = "server",
-                port = "${port}",
-                executable = {
-                  command = "dlv",
-                  args = { "dap", "-l", "127.0.0.1:${port}", "--log", "--log-output=dap" },
-                  detached = vim.fn.has "win32" == 0,
-                },
-              }
-            end
-          end
+          local dapgo = require('dap-go')
+          dapgo.setup()
           -- JS
           require('dap-vscode-js').setup({
             node_path = 'ts-node',
@@ -576,14 +559,24 @@ return {
             adapters = { 'pwa-node', 'pwa-chrome', 'pwa-msedge', 'node-terminal', 'pwa-extensionHost' },
           })
           require("dap").configurations = {
-            go = {
+           go = {
               {
-                type = "delve",
-                name = "Main Debug",
-                request = "launch",
-                program = "${workspaceFolder}/cmd/api/main.go",
+                type = 'go';
+                name = 'Debug';
+                request = 'launch';
+                showLog = false;
+                program = "${workspaceFolder}/main.go";
+                dlvToolPath = vim.fn.exepath('dlv')  -- Adjust to where delve is installed
               },
             },
+            -- delve = {
+            --   {
+            --     type = "delve",
+            --     name = "Main Debug",
+            --     request = "launch",
+            --     program = "${workspaceFolder}/main.go",
+            --   },
+            -- },
             typescript = {
               {
                 type = 'pwa-node',

@@ -1,13 +1,19 @@
 lastupdatecheck: 0
 recentrepos:
     - /Users/prajwal/.config
-    - /Users/prajwal/Documents/projects/work/the_wish_company/api
+    - /Users/prajwal/Documents/projects/work/novet-tech/taleturtle-api
+    - /Users/prajwal/Documents/projects/work/novet-tech/book-club-app
+    - /Users/prajwal/Documents/projects/work/novet-tech/api
+    - /Users/prajwal/Documents/projects/work/novet-tech/book-club-ai
     - /Users/prajwal/Documents/projects/work/the_wish_company/the_wishify_app
+    - /Users/prajwal/Documents/projects/work/the_wish_company/api
     - /Users/prajwal/.DAP/vscode-js-debug
     - /Users/prajwal/Documents/projects/work/unext/lumen/unext-react-clone
 startuppopupversion: 5
 lastversion: 0.44.1
 customcommandshistory:
+    - git pull origin main
+    - git pull origin feat/tinyvim
     - git checkout feat/astrovim
     - git fetch
     - npm run prepare
