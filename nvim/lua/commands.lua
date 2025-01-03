@@ -32,3 +32,17 @@ autocmd("BufWritePre", {
   end,
 })
 
+autocmd("FileType", {
+    pattern = "dap-float",
+    callback = function()
+        vim.api.nvim_buf_set_keymap(0, "n", "q", "<cmd>close!<CR>", { noremap = true, silent = true })
+    end
+})
+
+vim.api.nvim_exec([[
+  augroup DapGoAutoRestart
+    autocmd!
+    autocmd BufWritePost *.go lua require('dap').restart()
+  augroup END
+]], false)
+

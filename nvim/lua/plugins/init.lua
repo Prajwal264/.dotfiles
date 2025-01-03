@@ -565,6 +565,7 @@ return {
                 name = 'Debug';
                 request = 'launch';
                 showLog = false;
+                restart = true;
                 program = "${workspaceFolder}/main.go";
                 dlvToolPath = vim.fn.exepath('dlv')  -- Adjust to where delve is installed
               },
