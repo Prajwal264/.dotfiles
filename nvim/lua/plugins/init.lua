@@ -1,6 +1,5 @@
 return {
   { lazy = true, "nvim-lua/plenary.nvim" },
-
   {
     "EdenEast/nightfox.nvim",
     priority = 1000,
@@ -544,30 +543,30 @@ return {
       "williamboman/mason.nvim",
       "mfussenegger/nvim-dap",
       "mxsdev/nvim-dap-vscode-js",
-      "leoluz/nvim-dap-go"
+      "leoluz/nvim-dap-go",
     },
     opts = {
       automatic_installation = { "delve" },
       handlers = {
         function(config)
-          local dapgo = require('dap-go')
+          local dapgo = require "dap-go"
           dapgo.setup()
           -- JS
-          require('dap-vscode-js').setup({
-            node_path = 'ts-node',
-            debugger_path = os.getenv('HOME') .. '/.DAP/vscode-js-debug',
-            adapters = { 'pwa-node', 'pwa-chrome', 'pwa-msedge', 'node-terminal', 'pwa-extensionHost' },
-          })
+          require("dap-vscode-js").setup {
+            node_path = "ts-node",
+            debugger_path = os.getenv "HOME" .. "/.DAP/vscode-js-debug",
+            adapters = { "pwa-node", "pwa-chrome", "pwa-msedge", "node-terminal", "pwa-extensionHost" },
+          }
           require("dap").configurations = {
-           go = {
+            go = {
               {
-                type = 'go';
-                name = 'Debug';
-                request = 'launch';
-                showLog = false;
-                restart = true;
-                program = "${workspaceFolder}/main.go";
-                dlvToolPath = vim.fn.exepath('dlv')  -- Adjust to where delve is installed
+                type = "go",
+                name = "Debug",
+                request = "launch",
+                showLog = false,
+                restart = true,
+                program = "${workspaceFolder}/main.go",
+                dlvToolPath = vim.fn.exepath "dlv", -- Adjust to where delve is installed
               },
             },
             -- delve = {
@@ -580,7 +579,7 @@ return {
             -- },
             typescript = {
               {
-                type = 'pwa-node',
+                type = "pwa-node",
                 request = "launch",
                 console = "integratedTerminal",
                 internalConsoleOptions = "neverOpen",
@@ -588,14 +587,14 @@ return {
                 restart = true,
                 runtimeExecutable = "tsnd",
                 skipFiles = {
-                  "<node_internals>/**"
+                  "<node_internals>/**",
                 },
-                runtimeArgs = {"--respawn"},
-                args = {"${workspaceFolder}/src/index.ts"},
+                runtimeArgs = { "--respawn" },
+                args = { "${workspaceFolder}/src/index.ts" },
                 resolveSourceMapLocations = {
-                    "${workspaceFolder}/dist/**/*.js",
-                    "${workspaceFolder}/**",
-                    "!**/node_modules/**",
+                  "${workspaceFolder}/dist/**/*.js",
+                  "${workspaceFolder}/**",
+                  "!**/node_modules/**",
                 },
               },
               {
@@ -611,9 +610,9 @@ return {
                 runtimeExecutable = "ts-node",
                 skipFiles = { "<node_internals>/**", "node_modules/**" },
                 resolveSourceMapLocations = {
-                    "${workspaceFolder}/dist/**/*.js",
-                    "${workspaceFolder}/**",
-                    "!**/node_modules/**",
+                  "${workspaceFolder}/dist/**/*.js",
+                  "${workspaceFolder}/**",
+                  "!**/node_modules/**",
                 },
               },
               {
@@ -621,7 +620,7 @@ return {
                 request = "launch",
                 name = "Launch microservices",
                 program = "${file}",
-                arg = { '--exec','ts-node', '-r', 'dotenv/config', './src/index.ts' },
+                arg = { "--exec", "ts-node", "-r", "dotenv/config", "./src/index.ts" },
                 cwd = "${workspaceFolder}",
                 sourceMaps = true,
                 protocol = "inspector",
@@ -630,9 +629,9 @@ return {
                 runtimeExecutable = "nodemon",
                 skipFiles = { "<node_internals>/**", "node_modules/**" },
                 resolveSourceMapLocations = {
-                    "${workspaceFolder}/dist/**/*.js",
-                    "${workspaceFolder}/**",
-                    "!**/node_modules/**",
+                  "${workspaceFolder}/dist/**/*.js",
+                  "${workspaceFolder}/**",
+                  "!**/node_modules/**",
                 },
               },
             },
@@ -640,8 +639,8 @@ return {
               name = "Current TS File",
               type = "pwa-node",
               request = "launch",
-              args = {"${relativeFile}"},
-              runtimeArgs ={"--nolazy", "-r", "ts-node/register"},
+              args = { "${relativeFile}" },
+              runtimeArgs = { "--nolazy", "-r", "ts-node/register" },
               sourceMaps = true,
               cwd = "${workspaceRoot}",
               protocol = "inspector",
@@ -650,7 +649,7 @@ return {
                 "${workspaceFolder}/**",
                 "!**/node_modules/**",
               },
-            }
+            },
           }
         end,
       },
@@ -675,4 +674,7 @@ return {
       end
     end,
   },
+  {
+      "github/copilot.vim",
+  }
 }

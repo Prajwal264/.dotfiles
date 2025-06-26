@@ -55,7 +55,7 @@ lspconfig.lua_ls.setup {
 }
 
 -- setup multiple servers with same default options
-local servers = { "ts_ls", "html", "cssls", 'gopls', 'pyright' }
+local servers = { "ts_ls", "html", "cssls", 'gopls', 'jedi_language_server' }
 
 for _, lsp in ipairs(servers) do
   lspconfig[lsp].setup {
