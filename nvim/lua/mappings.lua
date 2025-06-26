@@ -12,7 +12,6 @@ map("n", "<C-c>", "<cmd> %y+ <CR>") -- copy whole filecontent
 -- neo-tree mappings
 map("n", "<leader>o", "<cmd>NvimTreeToggle<cr>")
 map("n", "<leader>e", function()
-  vim.print(vim.bo.filetype)
   if vim.bo.filetype == "NvimTree" then
     vim.cmd.wincmd "p"
   else
