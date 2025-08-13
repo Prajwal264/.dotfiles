@@ -11,3 +11,24 @@ autocmd("TextYankPost", {
   callback = function() vim.highlight.on_yank() end,
 })
 
+-- open nvim-tree on launch
+autocmd("VimEnter", {
+  desc = "Open NvimTree on startup",
+  group = augroup("open_nvimtree_on_startup", { clear = true }),
+  callback = function()
+    vim.schedule(function()
+      local ok_lazy, lazy = pcall(require, "lazy")
+      if ok_lazy then
+        pcall(lazy.load, { plugins = { "nvim-tree.lua" } })
+      end
+
+      local ok_api, api = pcall(require, "nvim-tree.api")
+      if ok_api then
+        pcall(api.tree.open)
+      else
+        pcall(vim.cmd, "NvimTreeOpen")
+      end
+    end)
+  end,
+})
+

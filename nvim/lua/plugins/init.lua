@@ -4,6 +4,10 @@ return {
     -- event = 'BufWritePre', -- uncomment for format on save
     opts = require "configs.conform",
   },
+  {
+    "nvim-treesitter/nvim-treesitter",
+    opts = { ensure_installed = {"html", "css", "bash", "typescript", "javascript", "python", "go"} },
+  },
 
   -- These are some examples, uncomment them if you want to see them work!
   {
