@@ -17,6 +17,19 @@ return {
     end,
   },
   {
+    "williamboman/mason.nvim",
+    build = ":MasonUpdate",
+    opts = {},
+  },
+  {
+    "williamboman/mason-lspconfig.nvim",
+    dependencies = { "williamboman/mason.nvim" },
+    opts = {
+      ensure_installed = { "html", "cssls", "tsserver", "pyright", "gopls" },
+      automatic_installation = true,
+    },
+  },
+  {
     "kdheepak/lazygit.nvim",
     lazy = true,
     cmd = {
@@ -112,6 +125,50 @@ return {
       "nvim-lua/plenary.nvim",
       "MunifTanjim/nui.nvim",
     },
+  }
+
+  -- Debugging
+  ,{
+    "mfussenegger/nvim-dap",
+    event = "VeryLazy",
+  }
+  ,{
+    "rcarriga/nvim-dap-ui",
+    event = "VeryLazy",
+    dependencies = {
+      "mfussenegger/nvim-dap",
+      "nvim-neotest/nvim-nio",
+    },
+    config = function()
+      require "configs.dap"
+    end,
+  }
+  ,{
+    "jay-babu/mason-nvim-dap.nvim",
+    event = "VeryLazy",
+    dependencies = {
+      "williamboman/mason.nvim",
+      "mfussenegger/nvim-dap",
+    },
+    opts = {
+      ensure_installed = { "python", "node2", "js" },
+      automatic_setup = true,
+    },
+  }
+  ,{
+    "mfussenegger/nvim-dap-python",
+    ft = "python",
+    dependencies = { "mfussenegger/nvim-dap" },
+    config = function()
+      local mason_debugpy = vim.fn.stdpath("data") .. "/mason/packages/debugpy/venv/bin/python"
+      require("dap-python").setup(mason_debugpy)
+    end,
+  }
+  ,{
+    "theHamsta/nvim-dap-virtual-text",
+    event = "VeryLazy",
+    dependencies = { "mfussenegger/nvim-dap" },
+    opts = {},
   }
 
   -- test new blink
