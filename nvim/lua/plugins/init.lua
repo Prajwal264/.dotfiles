@@ -26,6 +26,19 @@ return {
     end,
   },
   {
+    "williamboman/mason.nvim",
+    build = ":MasonUpdate",
+    opts = {},
+  },
+  {
+    "williamboman/mason-lspconfig.nvim",
+    dependencies = { "williamboman/mason.nvim" },
+    opts = {
+      ensure_installed = { "html", "cssls", "tsserver", "pyright", "gopls" },
+      automatic_installation = true,
+    },
+  },
+  {
     "kdheepak/lazygit.nvim",
     lazy = true,
     cmd = {
@@ -87,6 +100,86 @@ return {
       require("telescope").load_extension('harpoon')
     end,
   },
+  {
+    "yetone/avante.nvim",
+    -- if you want to build from source then do `make BUILD_FROM_SOURCE=true`
+    -- ⚠️ must add this setting! ! !
+    build = function()
+      -- conditionally use the correct build system for the current OS
+      if vim.fn.has("win32") == 1 then
+        return "powershell -ExecutionPolicy Bypass -File Build.ps1 -BuildFromSource false"
+      else
+        return "make"
+      end
+    end,
+    event = "VeryLazy",
+    version = false, -- Never set this value to "*"! Never!
+    ---@module 'avante'
+    ---@type avante.Config
+    opts = {
+      provider = "claude",
+      providers = {
+        claude = {
+          endpoint = "https://api.anthropic.com",
+          model = "claude-sonnet-4-20250514",
+          timeout = 30000, -- Timeout in milliseconds
+            extra_request_body = {
+              temperature = 0.75,
+              max_tokens = 20480,
+            },
+        },
+      },
+    },
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "MunifTanjim/nui.nvim",
+    },
+  }
+
+  -- Debugging
+  ,{
+    "mfussenegger/nvim-dap",
+    event = "VeryLazy",
+  }
+  ,{
+    "rcarriga/nvim-dap-ui",
+    event = "VeryLazy",
+    dependencies = {
+      "mfussenegger/nvim-dap",
+      "nvim-neotest/nvim-nio",
+    },
+    config = function()
+      require "configs.dap"
+    end,
+  }
+  ,{
+    "jay-babu/mason-nvim-dap.nvim",
+    event = "VeryLazy",
+    dependencies = {
+      "williamboman/mason.nvim",
+      "mfussenegger/nvim-dap",
+    },
+    opts = {
+      ensure_installed = { "python", "node2", "js" },
+      automatic_setup = true,
+    },
+  }
+  ,{
+    "mfussenegger/nvim-dap-python",
+    ft = "python",
+    dependencies = { "mfussenegger/nvim-dap" },
+    config = function()
+      local mason_debugpy = vim.fn.stdpath("data") .. "/mason/packages/debugpy/venv/bin/python"
+      require("dap-python").setup(mason_debugpy)
+    end,
+  }
+  ,{
+    "theHamsta/nvim-dap-virtual-text",
+    event = "VeryLazy",
+    dependencies = { "mfussenegger/nvim-dap" },
+    opts = {},
+  }
+
   -- test new blink
   -- { import = "nvchad.blink.lazyspec" },
 
