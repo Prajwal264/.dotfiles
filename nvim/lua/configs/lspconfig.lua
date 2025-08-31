@@ -1,9 +1,6 @@
 require("nvchad.configs.lspconfig").defaults()
 
-local servers = { "html", "cssls", "typescript", "javascript", "python", "go", "typescript-language-server" }
--- Use correct LSP server names
--- html, cssls are correct; typescript/javascript -> tsserver; python -> pyright; go -> gopls
-local servers = { "html", "cssls", "ts_ls", "pyright", "gopls" }
+local servers = { "html", "cssls", "ts_ls", "javascript", "pyright", "gopls", "typescript-language-server" }
 vim.lsp.enable(servers)
 
 -- Ensure explicit setups for servers to guarantee attachment and capabilities
