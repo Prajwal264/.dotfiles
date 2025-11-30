@@ -11,7 +11,17 @@ return {
   },
   cmd = 'Neotree',
   keys = {
-    { '<leader>e', ':Neotree focus<CR>', desc = 'NeoTree focus', silent = true },
+    {
+      '<leader>e',
+      function()
+        if vim.bo.filetype == 'neo-tree' then
+          vim.cmd.wincmd 'p' -- Go to previous window (editor)
+        else
+          vim.cmd 'Neotree focus' -- Focus Neo-tree (opens if needed)
+        end
+      end,
+      desc = 'Toggle focus between NeoTree and editor',
+    },
   },
   opts = {
     filesystem = {

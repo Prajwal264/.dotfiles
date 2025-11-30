@@ -460,7 +460,6 @@ require('lazy').setup({
       -- Automatically install LSPs and related tools to stdpath for Neovim
       { 'williamboman/mason.nvim', config = true }, -- NOTE: Must be loaded before dependants
       'williamboman/mason-lspconfig.nvim',
-      'WhoIsSethDaniel/mason-tool-installer.nvim',
 
       -- Useful status updates for LSP.
       -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
@@ -653,15 +652,9 @@ require('lazy').setup({
       --  You can press `g?` for help in this menu.
       require('mason').setup()
 
-      -- You can add other tools here that you want Mason to install
-      -- for you, so that they are available from within Neovim.
-      local ensure_installed = vim.tbl_keys(servers or {})
-      vim.list_extend(ensure_installed, {
-        'stylua', -- Used to format Lua code
-      })
-      require('mason-tool-installer').setup { ensure_installed = ensure_installed }
-
+      -- mason-lspconfig handles LSP server installation
       require('mason-lspconfig').setup {
+        ensure_installed = vim.tbl_keys(servers or {}),
         handlers = {
           function(server_name)
             local server = servers[server_name] or {}
@@ -673,6 +666,19 @@ require('lazy').setup({
           end,
         },
       }
+
+      -- Ensure non-LSP tools are installed (formatters, linters, etc.)
+      -- You can add more tools to this list as needed
+      local ensure_installed = { 'stylua' }
+      local mr = require 'mason-registry'
+      mr.refresh(function()
+        for _, tool in ipairs(ensure_installed) do
+          local p = mr.get_package(tool)
+          if not p:is_installed() then
+            p:install()
+          end
+        end
+      end)
     end,
   },
 
@@ -939,7 +945,7 @@ require('lazy').setup({
   --    This is the easiest way to modularize your config.
   --
   --  Uncomment the following line and add your plugins to `lua/custom/plugins/*.lua` to get going.
-  -- { import = 'custom.plugins' },
+  { import = 'custom.plugins' },
   --
   -- For additional information with loading, sourcing and examples see `:help lazy.nvim-🔌-plugin-spec`
   -- Or use telescope!
