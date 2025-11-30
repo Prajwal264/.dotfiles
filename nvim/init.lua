@@ -192,6 +192,10 @@ vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right win
 vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
 vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
 
+-- Visual mode indent/unindent with Tab
+vim.keymap.set('v', '<S-Tab>', '<gv', { desc = 'Unindent line' })
+vim.keymap.set('v', '<Tab>', '>gv', { desc = 'Indent line' })
+
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
 
