@@ -138,4 +138,45 @@ return {
       -- Setup keymaps
     end,
   },
+  {
+    'greggh/claude-code.nvim',
+    dependencies = {
+      'nvim-lua/plenary.nvim',
+    },
+    config = function()
+      -- Set SSL certificate for Zscaler proxy
+      vim.env.NODE_EXTRA_CA_CERTS = vim.fn.expand '~/.ssl/ZscalerRootCertificate.crt'
+
+      -- Use AWS Bedrock instead of direct Anthropic API
+      vim.env.CLAUDE_CODE_USE_BEDROCK = '1'
+      vim.env.ANTHROPIC_MODEL = 'apac.anthropic.claude-sonnet-4-20250514-v1:0'
+
+      require('claude-code').setup {
+        window = {
+          position = 'float',
+          float = {
+            width = '90%',
+            height = '90%',
+            row = 'center',
+            col = 'center',
+            border = 'rounded',
+          },
+        },
+        keymaps = {
+          toggle = {
+            normal = '<leader>cc',
+            terminal = '<leader>cc',
+          },
+        },
+      }
+
+      -- Hide Claude Code window on Escape in terminal mode
+      vim.api.nvim_create_autocmd('TermOpen', {
+        pattern = '*claude*',
+        callback = function()
+          vim.keymap.set('t', '<Esc>', '<cmd>ClaudeCode<cr>', { buffer = true, nowait = true, desc = 'Hide Claude Code' })
+        end,
+      })
+    end,
+  },
 }
